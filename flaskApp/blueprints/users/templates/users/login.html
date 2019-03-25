@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block content %}
+  <h3>Login</h3>
+
+  <form method="post" novalidate>
+          
+    {% for field in form  %}
+      {{ render_field(field) }}
+    {% endfor %}
+
+    <button class="uk-button uk-button-primary" type="submit">Login</button>
+       
+  </form>
+  
+{% endblock %}

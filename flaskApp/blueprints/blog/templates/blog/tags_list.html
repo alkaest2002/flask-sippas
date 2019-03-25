@@ -1,0 +1,3 @@
+{% for t in tags %}
+  <a href="{{ url_for('blog.posts_tagged', tag=t) }}">{{ t }}</a><br>
+{% endfor %}

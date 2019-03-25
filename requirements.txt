@@ -1,0 +1,17 @@
+bcrypt==3.1.6
+cffi==1.12.2
+Click==7.0
+Cython==0.29.6
+Flask==1.0.2
+Flask-Login==0.4.1
+Flask-Uploads==0.2.1
+Flask-WTF==0.14.2
+itsdangerous==1.1.0
+Jinja2==2.10
+MarkupSafe==1.1.1
+mistune==0.8.4
+pycparser==2.19
+python-dotenv==0.10.1
+six==1.12.0
+Werkzeug==0.15.1
+WTForms==2.2.1

@@ -1,0 +1,86 @@
+<html lang="it">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Sippas website">
+  <meta name="author" content="Pierpaolo Calanna">
+
+  <title>Sippas</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/vendor/uikit.min.css') }}">
+
+</head>
+<style>
+
+html {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.5;
+  background: #f8f8f8;
+  color: rgba(3,27,78,0.7) !important;
+}
+
+h1, .uk-h1, h2, .uk-h2, h3, .uk-h3, h4, .uk-h4, h5, .uk-h5, h6, .uk-h6 {
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  margin: 0 0 20px 0;
+  font-weight: normal;
+  color: #031b4e;
+  text-transform: none;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+.uk-section {
+  padding-top: 10px;
+}
+
+.uk-card-default {
+  color: rgba(3,27,78,0.7) !important;
+}
+
+.uk-table-striped tbody tr:nth-of-type(odd), .uk-table-striped>tr:nth-of-type(odd), .uk-list-striped>li:nth-of-type(odd) {
+  background: #e6e6e6;
+}
+
+.uk-table-small td, .uk-table-small th {
+  padding: 6px 12px;
+}
+
+</style>
+
+<body>
+
+  <!-- Nav -->
+  {% block navbar %}
+    {% include 'navbar.html' %}
+  {% endblock %}
+
+  <!-- Main -->
+  <div class="uk-container">
+
+    <!-- Flashes -->
+    {% include 'flashes.html' %}
+
+    <!-- Content -->
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <!-- JS scripts -->
+  <script src="{{ url_for('static', filename='js/vendor/uikit.js') }}" ></script>
+  <script src="{{ url_for('static', filename='js/vendor/uikit-icons.min.js') }}" ></script>
+
+  <!-- Additional scripts  -->
+  {% block scripts %}
+  {% endblock %}
+
+</body>
+
+</html>

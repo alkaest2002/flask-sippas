@@ -1,0 +1,86 @@
+{% macro render_field(field) %}
+  <div>
+    {% if field.type == "BooleanField" %}
+      
+      <div {% if field.errors %} class="has-error" {% endif %}>
+        
+        {% set class = [ "form-check-input", field.render_kw['class'] ] | join(" ") %}         
+        {{ field(class = class) | safe }}
+        {{ field.label }}
+
+        {% if field.errors %}
+          <div class="uk-text-danger uk-text-small" style="margin-top: 3px">
+            {% for error in field.errors %}
+              {{ error }}<br/>
+            {% endfor %}
+          </div>
+        {% endif %}
+      
+      </div>
+
+    {% elif field.type == "FieldList" %}
+      
+      {% for entry in field.entries %}
+        {{ entry(parent_loop=loop.index, placeholder=loop.index) | safe }}
+      {% endfor %}
+
+    {% elif field.type == "MultiCheckboxField" %}
+   
+      <div {% if field.errors %} class="has-error" {% endif %}>
+          
+          {% set class = [ field.render_kw['class']] | join(" ") %}
+          {{ field(class = class) | safe }}
+          
+          {% if field.errors %}
+            <div class="uk-text-danger uk-text-small" style="margin-top: 3px">
+              {% for error in field.errors %}
+                {{ error }}<br/>
+              {% endfor %}
+            </div>
+          {% endif %}
+        
+        </div>
+
+    {% elif field.type == "FileField" %}
+
+      <div {% if field.errors %} class="has-error" {% endif %}>
+        
+        {% set class = [ field.render_kw['class']] | join(" ") %}
+        {{ field(class = class) | safe }}
+        
+        {% if field.errors %}
+          <div class="uk-text-danger uk-text-small" style="margin-top: 3px">
+            {% for error in field.errors %}
+              {{ error }}<br/>
+            {% endfor %}
+          </div>
+        {% endif %}
+      
+      </div>
+
+    {% else %}
+      
+      <div {% if field.errors %} class="has-error" {% endif %}>
+        
+        {% set class = [ "uk-input" , field.render_kw['class']] | join(" ") %}
+        
+        {% if field.type != "CSRFTokenField" %}
+          {{ field.label }}
+        {% endif %}
+        
+        {{ field(class = class) | safe }}
+      
+        {% if field.errors %}
+          <div class="uk-text-danger uk-text-small" style="margin-top: 3px">
+            {% for error in field.errors %}
+              {{ error }}<br/>
+            {% endfor %}
+          </div>
+        {% endif %}
+      
+      </div>
+        
+    {% endif %}
+  </div>
+  
+{% endmacro %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="uk-section">
+  <div class="uk-grid uk-margin-large-bottom">
+    <div class="uk-width-expand">
+      <h2 class="uk-heading-divider">Filtra</h2>
+      <p>
+        <a href="{{ url_for('blog.dashboard') }}">Tutti gli articoli</a><br>
+        <a href="{{ url_for('blog.dashboard', is_sticky=1) }}">Solo articoli in evidenza</a><br>
+      </p>
+      <h2 class="uk-heading-divider">Azioni</h2>
+      <p>
+        <a href="{{ url_for('blog.create_post') }}">Crea nuovo articolo</a><br>
+        <a href="{{ url_for('blog.dashboard', is_sticky=1) }}">Annulla articoli in evidenza</a><br>
+      </p>
+    </div>
+    <div class="uk-width-4-5">
+      <h2 class="uk-heading-divider">Elenco articoli</h2>
+      <table class="uk-table uk-table-small uk-table-striped">
+        <thead>
+          <tr>
+            <th style="width:5%">Id</th>
+            <th style="width:45%">Titolo</th>
+            <th style="width:45%">Etichette</th>
+            <th style="width:5%">Evid.</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in posts %}
+          <tr>
+            <td>
+              <a href="{{ url_for('blog.edit_post', id=p.id) }}">{{ p.id }}</a>
+            </td>
+            <td class="uk-text-truncate">
+              {{ p.title | capitalize }}
+            </td>
+            <td>
+              {{ p.tags }}
+            </td>
+            <td>
+              {{ p.is_sticky }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

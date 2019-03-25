@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+  <h1>Error {{ code }}</h1>
+  <a href="{{ url_for('main.index') }}">Homepage</a>
+{% endblock %}

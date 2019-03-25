@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block content %}
+<style>
+  #tags {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  #tags li {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
+</style>
+
+<div class="uk-grid uk-grid-large">
+  <div class="uk-width-2-5@s">
+    <h2 class="uk-heading-divider">Istruzioni</h2>
+    <h3>Leggere con attenzione!</h3>
+    <ol>
+      <li>Scegli se mettere l'articolo in evidenza nella homepage.</li>
+      <li>Scrivi un titolo accattivante, non troppo lungo.</li>
+      <li>Seleziona fino a un massimo di tre etichette per categorizzare l'articolo.</li>
+      <li>Carica un'immagine che rifletta il contenuto dell'articolo. Consiglio una risoluzione di 800 x 800 pixel;
+        la
+        dimensione dell'immagine non può superare i 512 KByte.</li>
+      <li>Il file di testo deve essere in formato MARKDOWN <a href="https://www.markdownguide.org/cheat-sheet/"
+          target="_blank">(leggi la guida in linea)</a>. Durante il caricamento il file verrà trasformato
+        automaticamente in pagina HTML.</li>
+    </ol>
+  </div>
+  <div class="uk-width-expand">
+    <form novalidate method="post" enctype="multipart/form-data">
+
+      <h2 class="uk-heading-divider">Dati dell'articolo - id: {{ post.id }}</h2>
+      <div>
+        {{ render_field(form.is_sticky) }}
+      </div>
+      <div class="uk-clearfix uk-margin-top">
+        {{ render_field(form.title) }}
+        <br>
+        <label class="uk-margin-bottom-remove">Etichette</label>
+        {{ render_field(form.tags) }}
+      </div>
+      <div class="uk-margin-medium-top">
+        <h3>File da caricare</h3>
+        <table class="uk-table uk-table-small uk-text-small uk-table-striped uk-margin-remove-top">
+          <tr>
+            <td>File immagine</td>
+            <td>{{ render_field(form.teaser) }}</td>
+          </tr>
+          <tr>
+            <td>File testo MARKDOWN</td>
+            <td>{{ render_field(form.md) }}</td>
+          </tr>
+        </table>
+        {{ form.csrf_token }}
+      </div>
+      <div class="uk-margin">
+        <button class="uk-button uk-button-primary" type="submit">Applica</button>
+      </div>
+    </form>
+    <form method="post" action="{{ url_for('blog.delete_post', id=post.id) }}">
+      <button class="uk-button uk-button-text uk-text-danger uk-text-small" type="submit">Elimina articolo</button><br>
+      <span class="uk-text-small uk-text-danger">(Heads up! Operazione irreversibile)</span>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

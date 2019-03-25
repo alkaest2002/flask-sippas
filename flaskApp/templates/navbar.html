@@ -1,0 +1,20 @@
+
+<div class="uk-container uk-margin-large uk-margin-bottom">
+  <h1 class="uk-margin-medium-top uk-margin-remove-bottom">
+    <span style="display: inline-block;background-color:#031b4e;color:#fff;padding:0px 10px">𝚿</span>
+    <span class="uk-text-bold">SIPPAS</span>
+  </h1>
+  <p class="uk-margin-remove-vertical uk-text-bold">
+    Società Italiana di Psichiatria e Psicologia Aeronautica e Spaziale<br>
+  </p>
+  <a href="{{ url_for('main.index') }}">Home</a> / 
+  <a href="{{ url_for('main.services') }}">Servizi</a> / 
+  <a href="{{ url_for('main.gild') }}">Associazione</a> /
+  <a href="{{ url_for('blog.posts') }}">Blog</a> /
+  {% if current_user.is_authenticated %}
+    <a href="{{ url_for('blog.dashboard') }}">Dashboard</a> / 
+    <a href="{{ url_for('users.logout') }}">Logout</a>
+  {% else %}
+    <a href="{{ url_for('users.login') }}">Login</a>
+  {% endif %}
+</div>
