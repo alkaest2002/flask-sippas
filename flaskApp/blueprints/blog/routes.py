@@ -199,7 +199,7 @@ def create_post():
 
     # -----------------------------------------------------------------
     # write new post to sqlite
-    # -----------------------------------------------------------------
+    # ----------------------------------------------------------------- 
 
     # prepare data
     title = form_data["title"]
@@ -210,8 +210,7 @@ def create_post():
     author_id = current_user.get_author_id()
     
     # write
-    get_db().execute("INSERT INTO posts VALUES(NULL,?,?,?,?,?,?)", 
-      [title, body, teaser, tags, is_sticky, author_id])
+    get_db().execute("INSERT INTO posts VALUES(NULL,?,?,?,?,?,?)", [title, body, teaser, tags, is_sticky, author_id])
     get_db().commit()
     
     flash("Articolo creato correttamente", "primary")
@@ -293,6 +292,21 @@ def delete_post(id):
 
   # flash
   flash("L'articolo è stato cancellato correttamente", "primary")
+
+  # redirect
+  return redirect(url_for('blog.dashboard'))
+
+
+@bp_blog.route("/stickies/reset")
+@login_required
+def reset_stickies():
+  
+  # delete post
+  get_db().execute("UPDATE posts SET is_sticky = 0")
+  get_db().commit()
+
+  # flash
+  flash("L'operazione si è conclusa con successo", "primary")
 
   # redirect
   return redirect(url_for('blog.dashboard'))
