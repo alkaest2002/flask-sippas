@@ -47,7 +47,7 @@
               <a href="{{ url_for('blog.edit_post', id=p.id) }}">{{ p.id }}</a>
             </td>
             <td class="uk-text-truncate">
-              {{ p.title | capitalize }}
+              <a href="{{ url_for('blog.view_post', id=p.id) }}">{{ p.title | capitalize }}</a>
             </td>
             <td>
               {{ p.tags }}

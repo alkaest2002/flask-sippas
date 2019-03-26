@@ -1,18 +1,42 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="uk-margin-large-bottom">
-  <h2 class="uk-heading-divider">{{ post.title }}</h2>
-  <article class="uk-article">
-    <p class="uk-article-meta">
-      {% for tag in post.tags.split(' ') %}
-      <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a>
-      {% endfor %}<br>
-    </p>
-    <div>
-      {{ post.body | md_to_html | safe }}
+<div class="uk-grid">
+  <div class="uk-width-expand">
+    <h2 class="uk-heading-divider">{{ post.title }}</h2>
+    <article class="uk-article">
+      <p class="uk-article-meta">
+        {% for tag in post.tags.split(' ') %}
+        <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a>
+        {% endfor %}<br>
+      </p>
+      <div>
+        {{ post.body | md_to_html | safe }}
+      </div>
+    </article>
+  </div>
+  {% if latests %}
+  <div class="uk-width-1-3@s uk-text-truncate">
+    <div class="uk-card uk-card-default uk-card-small">
+      <div class="uk-card-header">
+        <h2>Articoli più recenti</h2>
+      </div>
+      <div class="uk-card-body">
+        <ul class="uk-list uk-list-divider uk-margin-medium">
+          {% for l in latests %}
+          <li class="uk-text-truncate uk-padding-vertical uk-padding-horizontal-small">
+            {% for tag in l.tags.split(' ') %}
+            <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a>
+            {% endfor %}<br>
+            {{ l.title | capitalize }}<br>
+            <a href="{{ url_for('blog.view_post', id=l.id) }}">leggi &rarr;</a><br>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
-  </article>
+  </div>
+  {% endif %}
 </div>
 
 {% endblock %}

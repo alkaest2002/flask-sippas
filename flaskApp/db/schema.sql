@@ -35,7 +35,7 @@ CREATE TABLE "posts" (
 -- ----------------------------
 -- Auto increment value for posts
 -- ----------------------------
-UPDATE "main"."sqlite_sequence" SET seq = 1013 WHERE name = 'posts';
+UPDATE "main"."sqlite_sequence" SET seq = 1 WHERE name = 'posts';
 
 -- ----------------------------
 -- Indexes structure for table posts

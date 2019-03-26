@@ -25,7 +25,7 @@ class PostCreateForm(FlaskForm):
     label = 'Titolo', 
     validators = [ 
       DataRequired(message="Il titolo è obbligatorio."),
-      Length(max=100, message="Il titolo è troppo lungo (max 100 caratteri).")
+      Length(max=150, message="Il titolo è troppo lungo (max 150 caratteri).")
     ],
     render_kw = { "required": False },
   )

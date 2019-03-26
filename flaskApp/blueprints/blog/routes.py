@@ -143,12 +143,13 @@ def view_post(id):
 
   # fetch post
   post = query_db('SELECT * FROM posts WHERE id = ?', [id], True)
+  latests = query_db('SELECT * FROM posts ORDER BY id DESC LIMIT 5')
 
   # no post no party
   if post == None: abort(404) 
 
   # render view
-  return render_template("blog/post_view.html",  post = post)
+  return render_template("blog/post_view.html",  post=post, latests=latests)
 
 
 # ################################################################################
