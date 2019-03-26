@@ -7,7 +7,9 @@
   <form method="post" novalidate>
           
     {% for field in form  %}
-      {{ render_field(field) }}
+      <div class="uk-margin">
+        {{ render_field(field) }}
+      </div>
     {% endfor %}
 
     <div class="uk-margin">

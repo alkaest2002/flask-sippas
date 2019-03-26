@@ -1,5 +1,5 @@
 <a href="{{ url_for('blog.posts') }}" class="uk-label" style="margin:3px;color:#fff;text-decoration: none">#Tutte</a><br><br>
 {% for t in tags %}
   <a href="{{ url_for('blog.posts_tagged', tag=t) }}" 
-    class="uk-label" style="margin:3px;color:#fff;text-decoration: none">{{ t }}</a>
+    class="uk-label" style="margin:3px;color:#fff;text-decoration: none">{{ t }}</a><br>
 {% endfor %}
