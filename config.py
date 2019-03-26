@@ -14,7 +14,6 @@ class Config(object):
 
 # dev config
 class devConfig(Config):
-  
   ENV = "development"
   DEBUG = True
   SECRET_KEY = os.getenv("DEV_SECRET_KEY")
