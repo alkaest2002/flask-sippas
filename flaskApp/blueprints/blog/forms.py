@@ -58,6 +58,11 @@ class PostCreateForm(FlaskForm):
   # Custom validations
   # --------------------------------------------------------------------------
 
+  def validata_is_sticky(form, field):
+    if field.data == None: return
+    if form.teaser.data == None:
+      raise ValidationError('Gli articoli in evidenza devono avere un"immagine')
+
   def validate_tags(form, field):
     if field.data == None: return
     accepted_tags = Tags().getList()
