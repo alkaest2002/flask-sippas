@@ -7,7 +7,7 @@
       <h2 class="uk-heading-divider">Filtra</h2>
       <p>
         <a href="{{ url_for('blog.dashboard') }}">Tutti gli articoli</a><br>
-        <a href="{{ url_for('blog.dashboard', is_sticky=1) }}">Solo articoli in evidenza</a><br>
+        <a href="{{ url_for('blog.dashboard_sticky') }}">Solo articoli in evidenza</a><br>
       </p>
       <h2 class="uk-heading-divider">Azioni</h2>
       <p>
@@ -17,6 +17,20 @@
     </div>
     <div class="uk-width-4-5">
       <h2 class="uk-heading-divider">Elenco articoli</h2>
+      <div>
+          <ul class="uk-pagination">
+            <li>
+              <a href="{{ url_for('blog.dashboard_prev', id=posts[0].id) }}" class="pagination-previous">
+                <span class="uk-margin-small-right" uk-pagination-previous></span> Indietro
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('blog.dashboard_next', id=posts[-1].id) }}" class="pagination-next">
+                Avanti <span class="uk-margin-small-left" uk-pagination-next></span>
+              </a>
+            </li>
+          </ul>
+        </div>
       <table class="uk-table uk-table-small uk-table-striped">
         <thead>
           <tr>
@@ -42,9 +56,29 @@
               {{ p.is_sticky }}
             </td>
           </tr>
+          {% else %}
+          <tr>
+            <td class="uk-text-muted uk-text-small uk-text-center" colspan="4" style="font-style: italic">
+              nessun articolo trovato
+            </td>
+          </tr>
           {% endfor %}
         </tbody>
       </table>
+      <div>
+        <ul class="uk-pagination">
+          <li>
+            <a href="{{ url_for('blog.dashboard_prev', id=posts[0].id) }}" class="pagination-previous">
+              <span class="uk-margin-small-right" uk-pagination-previous></span> Indietro
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('blog.dashboard_next', id=posts[-1].id) }}" class="pagination-next">
+              Avanti <span class="uk-margin-small-left" uk-pagination-next></span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

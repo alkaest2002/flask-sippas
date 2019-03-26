@@ -6,8 +6,8 @@ from . import bp_main
 def index():
 
   # fetch latest articles from blog
-  latest = query_db('SELECT * FROM posts ORDER BY id DESC LIMIT 5')
   stickies = query_db('SELECT * FROM posts WHERE is_sticky == 1 ORDER BY id DESC LIMIT 2')
+  latest = query_db('SELECT * FROM posts ORDER BY id DESC LIMIT {}'.format(4 if len(stickies) < 2 else 8))
 
   # render view
   return render_template("main/index.html", latests=latest, stickies=stickies )

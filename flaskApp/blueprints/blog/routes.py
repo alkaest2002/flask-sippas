@@ -162,16 +162,51 @@ def view_post(id):
 # ################################################################################
 
 @bp_blog.route("/dashboard")
-@bp_blog.route("/dashboard/<int:is_sticky>")
 @login_required
-def dashboard(is_sticky = None):
+def dashboard():
   
   # fetch posts
-  sql = "SELECT * FROM posts {} ORDER BY id DESC LIMIT {}"\
-    .format('WHERE is_sticky = 1' if is_sticky == 1 else None, DASHBOARD_PAGE_SIZE)
+  posts = query_db("SELECT * FROM posts ORDER BY id DESC LIMIT {}".format(DASHBOARD_PAGE_SIZE))
   
   # render view
-  return render_template("blog/dashboard.html", posts = query_db(sql))
+  return render_template("blog/dashboard.html", posts=posts)
+
+@bp_blog.route("/dashboard/next/offset/<int:id>")
+@login_required
+def dashboard_next(id):
+
+  # fetch posts
+  posts = query_db('SELECT * FROM posts WHERE id < ? ORDER BY id DESC LIMIT {}'.format(DASHBOARD_PAGE_SIZE), [id])
+
+  # no post no party
+  if posts == []: return redirect(url_for('blog.dashboard'))
+
+  # render view
+  return render_template("blog/dashboard.html", posts=posts)
+
+@bp_blog.route("/dashboard/prev/offset/<int:id>")
+@login_required
+def dashboard_prev(id):
+
+  # fetch posts
+  posts = query_db('SELECT * FROM posts WHERE id > ? ORDER BY id ASC LIMIT {}'.format(DASHBOARD_PAGE_SIZE), [id])
+  
+  # no post no party
+  if posts == []: return redirect(url_for('blog.dashboard'))
+
+  # render view
+  return render_template("blog/dashboard.html", posts=posts[::-1])
+
+
+@bp_blog.route("/dashboard/sticky")
+@login_required
+def dashboard_sticky():
+  
+  # fetch posts
+  posts = query_db("SELECT * FROM posts WHERE is_sticky = 1 ORDER BY id DESC LIMIT {}".format(DASHBOARD_PAGE_SIZE))
+  
+  # render view
+  return render_template("blog/dashboard.html", posts=posts)
 
 @bp_blog.route("/create", methods=['GET', 'POST'])
 @login_required
@@ -185,35 +220,33 @@ def create_post():
 
     # cache form data
     form_data = form.data
-
-    # -----------------------------------------------------------------
-    # upload teaser image
-    # -----------------------------------------------------------------
+  
+    # prepare name for teaser image
+    try: teaser_filename = secure_filename(form_data["teaser"].filename)
+    except: teaser_filename = None
     
-    # store teaser image
-    teaser = form.teaser.data
-    teaser_filename = None
-    if teaser != None:
-      teaser_filename = secure_filename(teaser.filename)
-      teaser.save(os.path.join(app.root_path, 'static', 'blog', teaser_filename))
-
-    # -----------------------------------------------------------------
-    # write new post to sqlite
-    # ----------------------------------------------------------------- 
-
-    # prepare data
+    # prepare data for other props
     title = form_data["title"]
     body = markdown(form_data["md"].read().decode("utf-8"))
-    teaser = teaser_filename
     tags = " ".join(form_data["tags"])
     is_sticky = form_data["is_sticky"]
     author_id = current_user.get_author_id()
     
-    # write
-    get_db().execute("INSERT INTO posts VALUES(NULL,?,?,?,?,?,?)", [title, body, teaser, tags, is_sticky, author_id])
+    # write data to sqlite
+    cur = get_db().cursor()
+    cur.execute("INSERT INTO posts VALUES(NULL,?,?,?,?,?,?)", [ title, body, teaser_filename, tags, is_sticky, author_id ])
     get_db().commit()
+
+    # upload teaser image
+    if teaser_filename:
+      path = os.path.join(app.root_path, 'static', 'blog', str(cur.lastrowid))
+      if not os.path.exists(path): os.makedirs(path)
+      form_data["teaser"].save(os.path.join(path, teaser_filename))
     
-    flash("Articolo creato correttamente", "primary")
+    # flash
+    flash("Articolo creato correttamente.", "primary")
+
+    # redirect on success
     return redirect(url_for('blog.dashboard'))
 
   # render view
@@ -223,13 +256,13 @@ def create_post():
 @login_required
 def edit_post(id):
 
-  # fetch post
+  # fetch post to be edited
   post = query_db('SELECT * FROM posts WHERE id = ?', [id], True)
 
   # no post no party
   if post == None: return abort(404) 
 
-  # init form
+  # init form with post data
   data = {}
   data["title"] = post["title"]
   data["tags"] = post["tags"].split(" ")
@@ -241,17 +274,10 @@ def edit_post(id):
 
     # cache form data
     form_data = form.data
-   
-    # -----------------------------------------------------------------
-    # upload teaser image
-    # -----------------------------------------------------------------
-    
-    # store teaser image
-    teaser = form.teaser.data
-    teaser_filename = None
-    if teaser != None:
-      teaser_filename = secure_filename(teaser.filename)
-      teaser.save(os.path.join(app.root_path, 'static', 'blog', teaser_filename))
+       
+    # prepare name for teaser image
+    try: teaser_filename = secure_filename(form_data["teaser"].filename)
+    except: teaser_filename = None
    
     # -----------------------------------------------------------------
     # update post in sqlite
@@ -270,19 +296,29 @@ def edit_post(id):
     # build field update
     update_fields = ", ".join([ "{}=?".format(field_label) for field_label, value in props if value != None ])
     params = [ value for _, value in props if value != None  ] + [id]
-    print(update_fields, params)
     
-    get_db().execute("UPDATE posts SET {} WHERE id=?".format(update_fields), params)
+    # write data to sqlite
+    cur = get_db().cursor()
+    cur.execute("UPDATE posts SET {} WHERE id=?".format(update_fields), params)
     get_db().commit()
 
+    # upload teaser image
+    if teaser_filename:
+      path = os.path.join(app.root_path, 'static', 'blog', str(id))
+      if not os.path.exists(path): os.makedirs(path)
+      form_data["teaser"].save(os.path.join(path, teaser_filename))
+
+    # flash
     flash("L'articolo è stato creato correttamente", "primary")
+
+    # redirect on success
     return redirect(url_for('blog.dashboard'))
 
   # render view
   return render_template("blog/post_create_update.html",  form = form, post = post, tags = Tags().getList())
 
 
-@bp_blog.route("/delete/<int:id>")
+@bp_blog.route("/delete/<int:id>", methods=['post'])
 @login_required
 def delete_post(id):
   
@@ -295,7 +331,6 @@ def delete_post(id):
 
   # redirect
   return redirect(url_for('blog.dashboard'))
-
 
 @bp_blog.route("/stickies/reset")
 @login_required

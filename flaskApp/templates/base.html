@@ -37,8 +37,13 @@ li {
   margin-bottom: 8px;
 }
 
+thead tr th {
+  border-top: 1px solid #ddd;
+}
+
 .uk-section {
-  padding-top: 10px;
+  padding: 0px;
+  padding-top: 15px;
 }
 
 .uk-card-default {
@@ -63,7 +68,7 @@ li {
   {% endblock %}
 
   <!-- Main -->
-  <div class="uk-container">
+  <div class="uk-container uk-margin-large-bottom">
 
     <!-- Flashes -->
     {% include 'flashes.html' %}
@@ -71,6 +76,7 @@ li {
     <!-- Content -->
     {% block content %}
     {% endblock %}
+
   </div>
 
   <!-- JS scripts -->

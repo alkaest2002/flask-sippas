@@ -45,27 +45,30 @@
   <div class="uk-section">
     <div class="uk-container">
       <h2 class="uk-heading-divider">Dal blog</h2>
-      <div class="uk-child-width-1-2@m uk-grid">
-        <div class="uk-margin">
+      <div class="uk-grid">
+        <div class="uk-margin uk-width-2-5@s ">
           <h3>01. Articoli in evidenza</h3>
-          <ul class="uk-list uk-list-striped">
+          <div class="uk-child-width-1-1" uk-grid>
             {% for s in stickies %}
-            <li style="padding:20px">
-                {% for tag in s.tags.split(' ') %} <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a> {% endfor %}<br>
-                <h3>{{ s.id }} - {{ s.title | capitalize }}</h3>
-                {{ s.body | safe }}
-                <div>
-                  <a href="{{ url_for('blog.view_post', id=s.id) }}">leggi &rarr;</a>
+              <div>
+                <div class="uk-card uk-card-default uk-card-small">
+                  <div class="uk-card-media-top">
+                    <img src="{{ url_for('static', filename='blog/'+s.teaser) }}"/>
+                  </div>
+                  <div class="uk-card-body">
+                    <h3 class="uk-card-title">{{ s.title | capitalize }}</h3>
+                    {% for tag in s.tags.split(' ') %} <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a> {% endfor %}<br>
+                  </div>
                 </div>
-              </li>
-              {% endfor %}
-            </ul>
+              </div>
+            {% endfor %}
+          </div>
         </div>
-        <div class="uk-margin uk-margin-remove-top">
+        <div class="uk-width-expand uk-margin uk-margin-remove-top">
           <h3>02. Articoli più recenti</h3>
             <ul class="uk-list uk-list-striped">
               {% for l in latests %}
-              <li class="uk-text-truncate" style="padding:20px">
+              <li class="uk-text-truncate uk-padding-small">
                 {% for tag in l.tags.split(' ') %} <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a> {% endfor %}<br>
                 {{ l.title | capitalize }}<br>
                 <a href="{{ url_for('blog.view_post', id=l.id) }}">leggi &rarr;</a><br>
@@ -129,7 +132,7 @@
     </div>
   </div>
 
-  <div class="uk-section">
+  <div class="uk-section uk-margin-medium-top">
     <div class="uk-container">
       <h2 class="uk-heading-divider">Dove Siamo</h2>
       <p>Associazione SIPPAS Via Roma 122 Scala A Int. 5, 00012 Guidonia (RM) - info@sippas.it</p>
