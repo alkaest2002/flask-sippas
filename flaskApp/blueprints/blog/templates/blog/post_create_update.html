@@ -37,7 +37,13 @@
   <div class="uk-width-expand">
     <form novalidate method="post" enctype="multipart/form-data">
 
-      <h2 class="uk-heading-divider">Dati dell'articolo {% if post %} - id: {{ post.id  }} {% endif %}</h2>
+      <h2 class="uk-heading-divider">Dati dell'articolo 
+        {% if post %} 
+          - <a 
+            href="{{ 'data:text/plain;base64,' }}{{ post.body | b64_encode }}"  
+            download="data.md"
+          >id: {{ post.id  }} </a>
+        {% endif %}</h2>
       <div>
         {{ render_field(form.is_sticky) }}
       </div>
