@@ -8,11 +8,7 @@ from wtforms.validators import Regexp, Optional, Length, DataRequired
 
 from .models import Tags
 
-CHOICES = list(map(lambda x: (x,x), Tags().getList()))
-
-class MultiCheckboxField(SelectMultipleField):
-	widget = ListWidget(prefix_label=False)
-	option_widget	= CheckboxInput()
+TAGS_CHOICES = list(map(lambda x: (x,x), Tags().getList()))
 
 # ################################################################################
 # FORMS
@@ -31,12 +27,14 @@ class PostCreateForm(FlaskForm):
   )
 
   # tags
-  tags = MultiCheckboxField(
+  tags = SelectMultipleField(
     'Tag', 
-    choices=CHOICES,
+    choices=TAGS_CHOICES,
     validators = [ 
       DataRequired(message="Le etichette sono obbligatorie (almeno una)."),
     ],
+    widget = ListWidget(prefix_label=False),
+	  option_widget	= CheckboxInput()
   )
 
   # is sticky

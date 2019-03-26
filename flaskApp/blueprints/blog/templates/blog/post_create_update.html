@@ -18,66 +18,65 @@
     margin-bottom: 0;
   }
 </style>
-
-<div class="uk-grid uk-grid-large">
-  <div class="uk-width-2-5@s">
-    <h2 class="uk-heading-divider">Istruzioni</h2>
-    <h3>Leggere con attenzione!</h3>
-    <ol id="instruction-list">
-      <li>Scegli se mettere l'articolo in evidenza nella homepage.</li>
-      <li>Scrivi un titolo accattivante, non troppo lungo.</li>
-      <li>Seleziona fino a un massimo di tre etichette per categorizzare l'articolo.</li>
-      <li>Carica un'immagine che rifletta il contenuto dell'articolo. Risoluzione consigliata di 800 x 800 pixel;
-        l'immagine non può superare i 512 KByte.</li>
-      <li>Il file di testo deve essere in formato MARKDOWN <a href="https://www.markdownguide.org/cheat-sheet/"
-          target="_blank">(leggi la guida in linea)</a>. Durante il caricamento il file verrà trasformato
-        automaticamente in pagina HTML.</li>
-    </ol>
+<div class="uk-section">
+  <div>
+    <h2 class="uk-heading-divider">Dati dell'articolo
+      {% if post %}
+      - <a href="{{ 'data:text/plain;base64,' }}{{ post.body | b64_encode }}" download="data.md">id: {{ post.id  }}
+      </a>
+      {% endif %}
+    </h2>
   </div>
-  <div class="uk-width-expand">
-    <form novalidate method="post" enctype="multipart/form-data">
+  <div>
+    <form novalidate method="post" enctype="multipart/form-data" class="uk-margin-top">
+      <div class="uk-width-1-1">
+        <div class="uk-margin-top">
+          {{ render_field(form.title) }}
+        </div>
+      </div>
 
-      <h2 class="uk-heading-divider">Dati dell'articolo 
-        {% if post %} 
-          - <a 
-            href="{{ 'data:text/plain;base64,' }}{{ post.body | b64_encode }}"  
-            download="data.md"
-          >id: {{ post.id  }} </a>
-        {% endif %}</h2>
-      <div>
+      <div class="uk-grid uk-child-width-1-2 uk-margin-small-top">
+        <div class="uk-margin-top">
+          <h3 class="uk-heading-divider">Etichette</h3>
+          <p class="uk-text-small">Seleziona fino a un massimo di tre etichette per categorizzare l'articolo.</p>
+          {{ render_field(form.tags) }}
+        </div>
+        <div class="uk-margin-top">
+          <h3 class="uk-heading-divider">File da caricare</h3>
+          <ul id="instruction-list" class="uk-text-small">
+            <li>Immagine: risoluzione consigliata 800 x 800 px; dimensione max di 512 KByte.</li>
+            <li>Il file di testo deve essere in formato MARKDOWN <a href="https://www.markdownguide.org/cheat-sheet/"
+                target="_blank">(leggi la guida in linea)</a>.</li>
+          </ul>
+          <table class="uk-table uk-table-small uk-text-small uk-table-striped uk-margin-top">
+            <tr>
+              <td>File immagine</td>
+              <td>{{ render_field(form.teaser) }}</td>
+            </tr>
+            <tr>
+              <td>File testo MARKDOWN</td>
+              <td>{{ render_field(form.md) }}</td>
+            </tr>
+          </table>
+          {{ form.csrf_token }}
+        </div>
+      </div>
+      <div class="uk-margin">
         {{ render_field(form.is_sticky) }}
-      </div>
-      <div class="uk-clearfix uk-margin-top">
-        {{ render_field(form.title) }}
-        <br>
-        <label class="uk-margin-bottom-remove">Etichette</label>
-        {{ render_field(form.tags) }}
-      </div>
-      <div class="uk-margin-medium-top">
-        <h3>File da caricare</h3>
-        <table class="uk-table uk-table-small uk-text-small uk-table-striped uk-margin-remove-top">
-          <tr>
-            <td>File immagine</td>
-            <td>{{ render_field(form.teaser) }}</td>
-          </tr>
-          <tr>
-            <td>File testo MARKDOWN</td>
-            <td>{{ render_field(form.md) }}</td>
-          </tr>
-        </table>
-        {{ form.csrf_token }}
       </div>
       <div class="uk-margin">
         <button class="uk-button uk-button-primary" type="submit">Applica</button>
       </div>
     </form>
     {% if post %}
-      <form method="post" action="{{ url_for('blog.delete_post', id=post.id) }}">
-        <button class="uk-button uk-button-text uk-text-danger uk-text-small" type="submit">Elimina articolo</button><br>
-        <span class="uk-text-small uk-text-danger">(Heads up! Operazione irreversibile)</span>
-      </form>
+    <form method="post" action="{{ url_for('blog.delete_post', id=post.id) }}">
+      <button class="uk-button uk-button-text uk-text-danger uk-text-small" type="submit">Elimina
+        articolo</button><br>
+      <span class="uk-text-small uk-text-danger">(Heads up! Operazione irreversibile)</span>
+    </form>
     {% endif %}
   </div>
 </div>
+
 
 {% endblock %}

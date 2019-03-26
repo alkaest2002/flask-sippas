@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 from pathlib import Path
 
 # load .env
-load_dotenv(dotenv_path=Path('.') / '.env')
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
 
 # base config
 class Config(object):
@@ -25,6 +26,5 @@ class devConfig(Config):
   MAIL_PASSWORD = os.getenv("DEV_MAIL_PASSWORD")
 
 # prod config
-class prodConfig(Config):
-  
+class prodConfig(Config):  
   SECRET_KEY = os.getenv("PROD_SECRET_KEY")

@@ -24,7 +24,7 @@
         {{ entry(parent_loop=loop.index, placeholder=loop.index) | safe }}
       {% endfor %}
 
-    {% elif field.type == "MultiCheckboxField" %}
+    {% elif field.type == "MultiCheckboxField" or field.type == "SelectMultipleField" %}
    
       <div {% if field.errors %} class="has-error" {% endif %}>
           

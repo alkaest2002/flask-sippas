@@ -1,11 +1,12 @@
 import os
 import time  
 
+from flaskApp import app
 from flask import render_template, abort, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 from flaskApp.db.sqlite import get_db, query_db
-from flaskApp import app
 from flask_login import login_required, current_user
+from flaskApp.extensions.cache_ext import cache
 
 from . import bp_blog
 from .models import Tags 
@@ -24,6 +25,7 @@ DASHBOARD_PAGE_SIZE = 25
 # -----------------------------------------------------------------
 
 @bp_blog.route("/")
+@cache.cached()
 def posts():
   
   # fetch posts
@@ -38,6 +40,7 @@ def posts():
   )
 
 @bp_blog.route("/next/offset/<int:id>")
+@cache.cached()
 def posts_next(id):
   
   # fetch posts
@@ -55,6 +58,7 @@ def posts_next(id):
   )
 
 @bp_blog.route("/prev/offset/<int:id>")
+@cache.cached()
 def posts_prev(id):
   
   # fetch posts
@@ -76,6 +80,7 @@ def posts_prev(id):
 # -----------------------------------------------------------------
 
 @bp_blog.route("/tag/<string:tag>")
+@cache.cached()
 def posts_tagged(tag):
 
   # no proper tag no party
@@ -94,6 +99,7 @@ def posts_tagged(tag):
   )
 
 @bp_blog.route("/tag/<string:tag>/next/offset/<int:id>")
+@cache.cached()
 def posts_tagged_next(tag, id):
 
   # no proper tag no party
@@ -115,6 +121,7 @@ def posts_tagged_next(tag, id):
   )
 
 @bp_blog.route("/tag/<string:tag>/prev/offset/<int:id>")
+@cache.cached()
 def posts_tagged_prev(tag, id):
 
   # no proper tag no party
@@ -139,6 +146,7 @@ def posts_tagged_prev(tag, id):
 # -----------------------------------------------------------------
 
 @bp_blog.route("/view/<int:id>")
+@cache.cached()
 def view_post(id):
 
   # fetch post
