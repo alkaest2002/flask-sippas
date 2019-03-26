@@ -21,12 +21,12 @@
           <ul class="uk-pagination">
             <li>
               <a href="{{ url_for('blog.dashboard_prev', id=posts[0].id) }}" class="pagination-previous">
-                <span class="uk-margin-small-right" uk-pagination-previous></span> Indietro
+                <span class="uk-margin-small-right" uk-pagination-previous></span> Più recenti
               </a>
             </li>
             <li>
               <a href="{{ url_for('blog.dashboard_next', id=posts[-1].id) }}" class="pagination-next">
-                Avanti <span class="uk-margin-small-left" uk-pagination-next></span>
+                Meno recenti <span class="uk-margin-small-left" uk-pagination-next></span>
               </a>
             </li>
           </ul>
@@ -69,12 +69,12 @@
         <ul class="uk-pagination">
           <li>
             <a href="{{ url_for('blog.dashboard_prev', id=posts[0].id) }}" class="pagination-previous">
-              <span class="uk-margin-small-right" uk-pagination-previous></span> Indietro
+              <span class="uk-margin-small-right" uk-pagination-previous></span> Più recenti
             </a>
           </li>
           <li>
             <a href="{{ url_for('blog.dashboard_next', id=posts[-1].id) }}" class="pagination-next">
-              Avanti <span class="uk-margin-small-left" uk-pagination-next></span>
+              Meno recenti <span class="uk-margin-small-left" uk-pagination-next></span>
             </a>
           </li>
         </ul>

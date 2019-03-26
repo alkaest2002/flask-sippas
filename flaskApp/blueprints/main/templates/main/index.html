@@ -2,140 +2,147 @@
 
 {% block content %}
 
-  <div class="uk-section">
-    <div class="uk-container">
-      <h2 class="uk-heading-divider">Cosa facciamo</h2>
-      <div class="uk-grid uk-child-width-1-2@m">
-        <div class="uk-margin" style="margin-top:20px">
-          <h3>01. Ricerca scientifica</h3>
-          <p>Svolgiamo attività di ricerca in ambito aeronautico e spaziale, con particolare riferimento agli aspetti
-            psichiatrici, psicologici e attitudinali dell'esperienza del volo.</p>
-          <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
-            data-src="{{ url_for('static', filename='img/research.jpg') }}" uk-img="">
-          </div>
+<div class="uk-section">
+  <div class="uk-container">
+    <h2 class="uk-heading-divider">Cosa facciamo</h2>
+    <div class="uk-grid uk-grid-large uk-child-width-1-2@m">
+      <div class="uk-margin">
+        <h3>01. Ricerca scientifica</h3>
+        <p>Svolgiamo attività di ricerca in ambito aeronautico e spaziale, con particolare riferimento agli aspetti
+          psichiatrici, psicologici e attitudinali dell'esperienza del volo.</p>
+        <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
+          data-src="{{ url_for('static', filename='img/research.jpg') }}" uk-img="">
         </div>
-        <div class="uk-margin">
-          <h3>02. Divulgazione</h3>
-          <p>Promuoviamo la divulgazione delle conoscenze medico-psicologiche relative ai settori aeronautico e
-            spaziale, rivolgendoci al mondo scientifico, alle autorità politiche, ai mass media e al pubblico.</p>
-          <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
-            data-src="{{ url_for('static', filename='img/tell.jpg') }}" uk-img="">
-          </div>
+      </div>
+      <div class="uk-margin uk-margin-remove-top">
+        <h3>02. Divulgazione</h3>
+        <p>Promuoviamo la divulgazione delle conoscenze medico-psicologiche relative ai settori aeronautico e
+          spaziale, rivolgendoci al mondo scientifico, alle autorità politiche, ai mass media e al pubblico.</p>
+        <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
+          data-src="{{ url_for('static', filename='img/tell.jpg') }}" uk-img="">
         </div>
-        <div class="uk-margin">
-          <h3>03. Collaborazioni</h3>
-          <p>Proproniamo la nostra collaborazione agli enti pubblici, alle imprese e agli organismi scientifici che
-            sono direttamente o indirettamente coinvolti nelle attività aeronautiche e spaziali.</p>
-          <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
-            data-src="{{ url_for('static', filename='img/teamwork.jpg') }}" uk-img="">
-          </div>
+      </div>
+      <div class="uk-margin">
+        <h3>03. Collaborazioni</h3>
+        <p>Proproniamo la nostra collaborazione agli enti pubblici, alle imprese e agli organismi scientifici che
+          sono direttamente o indirettamente coinvolti nelle attività aeronautiche e spaziali.</p>
+        <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
+          data-src="{{ url_for('static', filename='img/teamwork.jpg') }}" uk-img="">
         </div>
-        <div class="uk-margin">
-          <h3>04. Servizi</h3>
-          <p>Offriamo la nostra esperienza nel campo della selezione del personale, della
-            prevenzione/cura/riabilitazione dei disturbi lavoro-correlati e a rilevanza medico-legale.</p>
-          <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
-            data-src="{{ url_for('static', filename='img/services.jpg') }}" uk-img="">
-          </div>
+      </div>
+      <div class="uk-margin">
+        <h3>04. Servizi</h3>
+        <p>Offriamo la nostra esperienza nel campo della selezione del personale, della
+          prevenzione/cura/riabilitazione dei disturbi lavoro-correlati e a rilevanza medico-legale.</p>
+        <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
+          data-src="{{ url_for('static', filename='img/services.jpg') }}" uk-img="">
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="uk-section">
-    <div class="uk-container">
-      <h2 class="uk-heading-divider">Dal blog</h2>
-      <div class="uk-grid">
-        <div class="uk-margin uk-width-2-5@s ">
-          <h3>01. Articoli in evidenza</h3>
-          <div class="uk-child-width-1-1" uk-grid>
-            {% for s in stickies %}
-              <div>
-                <div class="uk-card uk-card-default uk-card-small">
-                  <div class="uk-card-media-top">
-                    <img src="{{ url_for('static', filename='blog/'+s.teaser) }}"/>
-                  </div>
-                  <div class="uk-card-body">
-                    <h3 class="uk-card-title">{{ s.title | capitalize }}</h3>
-                    {% for tag in s.tags.split(' ') %} <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a> {% endfor %}<br>
-                  </div>
-                </div>
+<div class="uk-section">
+  <div class="uk-container">
+    <div class="uk-grid">
+      <div class="uk-margin uk-width-2-5@s">
+        <h2 class="uk-heading-divider">Articoli in evidenza</h2>
+        <div class="uk-child-width-1-1" uk-grid>
+          {% for s in stickies %}
+          <div>
+            <div class="uk-card uk-card-default uk-card-small">
+              <div class="uk-card-media-top">
+                <img src="{{ url_for('static', filename='blog/'+s.id |string+'/'+s.teaser) }}" />
               </div>
-            {% endfor %}
+              <div class="uk-card-body">
+                <h3 class="uk-card-title uk-text-truncate">{{ s.title | capitalize }}</h3>
+                {% for tag in s.tags.split(' ') %}
+                <a href="{{ url_for('blog.posts_tagged', tag=tag) }}"><span class="uk-text-small">{{ tag }}</span></a>
+                {% endfor %}
+              </div>
+            </div>
           </div>
+          {% endfor %}
         </div>
-        <div class="uk-width-expand uk-margin uk-margin-remove-top">
-          <h3>02. Articoli più recenti</h3>
-            <ul class="uk-list uk-list-striped">
+      </div>
+      <div class="uk-width-expand uk-margin uk-margin-remove-top">
+        <h2 class="uk-heading-divider">Articoli più recenti</h2>
+        <div class="uk-card uk-card-default">
+          <div class="uk-card-body">
+            <ul class="uk-list uk-list-divider uk-margin-medium">
               {% for l in latests %}
-              <li class="uk-text-truncate uk-padding-small">
-                {% for tag in l.tags.split(' ') %} <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a> {% endfor %}<br>
+              <li class="uk-text-truncate uk-padding-vertical uk-padding-horizontal-small">
+                {% for tag in l.tags.split(' ') %}
+                <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a>
+                {% endfor %}<br>
                 {{ l.title | capitalize }}<br>
                 <a href="{{ url_for('blog.view_post', id=l.id) }}">leggi &rarr;</a><br>
               </li>
               {% endfor %}
             </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="uk-section">
-    <div class="uk-container">
-      <h2 class="uk-heading-divider">Sostenitori</h2>
-      <p>Le seguenti società sostengono con entusiasmo le iniziative della nostra associazione.</p>
-      <div class="uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match uk-grid-stack" uk-grid="">
+<div class="uk-section">
+  <div class="uk-container">
+    <h2 class="uk-heading-divider">Sostenitori</h2>
+    <p>Le seguenti società sostengono con entusiasmo le iniziative della nostra associazione.</p>
+    <div class="uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match uk-grid-stack" uk-grid="">
 
-        <div class="uk-first-column">
-          <div class="uk-card uk-card-default uk-grid uk-grid-collapse uk-margin uk-grid-stack" uk-grid="">
-            <div class="uk-first-column">
-              <div class="uk-card-body">
-                <p style="font-size:2em" class="uk-text-bold uk-margin-remove-bottom uk-width-expand">Angelini</p>
-                <p class="uk-margin-remove-top uk-text-small"><a class="uk-link uk-link-text"
-                    href="https://www.angelini.it" target="_blank">
-                    https://www.angelini.it
-                  </a></p>
-              </div>
+      <div class="uk-first-column">
+        <div class="uk-card uk-card-default uk-grid uk-grid-collapse uk-margin uk-grid-stack" uk-grid="">
+          <div class="uk-first-column">
+            <div class="uk-card-body">
+              <p style="font-size:2em" class="uk-text-bold uk-margin-remove-bottom uk-width-expand">Angelini</p>
+              <p class="uk-margin-remove-top uk-text-small"><a class="uk-link uk-link-text"
+                  href="https://www.angelini.it" target="_blank">
+                  https://www.angelini.it
+                </a></p>
             </div>
           </div>
         </div>
-
-        <div class="uk-grid-margin uk-first-column">
-          <div class="uk-card uk-card-default uk-grid uk-grid-collapse uk-margin uk-grid-stack" uk-grid="">
-            <div class="uk-first-column">
-              <div class="uk-card-body">
-                <p style="font-size:2em" class="uk-text-bold uk-margin-remove-bottom uk-width-expand">Pfizer</p>
-                <p class="uk-margin-remove-top uk-text-small"><a class="uk-link uk-link-text" href="http://www.pfizer.it"
-                    target="_blank">
-                    http://www.pfizer.it
-                  </a></p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="uk-grid-margin uk-first-column">
-          <div class="uk-card uk-card-default uk-grid uk-grid-collapse uk-margin uk-grid-stack" uk-grid="">
-            <div class="uk-first-column">
-              <div class="uk-card-body">
-                <p style="font-size:2em" class="uk-text-bold uk-margin-remove-bottom uk-width-expand">Schuhfried</p>
-                <p class="uk-margin-remove-top uk-text-small"><a class="uk-link uk-link-text"
-                    href="https://www.schuhfried.it/" target="_blank">
-                    https://www.schuhfried.it/
-                  </a></p>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
-    </div>
-  </div>
 
-  <div class="uk-section uk-margin-medium-top">
-    <div class="uk-container">
-      <h2 class="uk-heading-divider">Dove Siamo</h2>
-      <p>Associazione SIPPAS Via Roma 122 Scala A Int. 5, 00012 Guidonia (RM) - info@sippas.it</p>
+      <div class="uk-grid-margin uk-first-column">
+        <div class="uk-card uk-card-default uk-grid uk-grid-collapse uk-margin uk-grid-stack" uk-grid="">
+          <div class="uk-first-column">
+            <div class="uk-card-body">
+              <p style="font-size:2em" class="uk-text-bold uk-margin-remove-bottom uk-width-expand">Pfizer</p>
+              <p class="uk-margin-remove-top uk-text-small"><a class="uk-link uk-link-text" href="http://www.pfizer.it"
+                  target="_blank">
+                  http://www.pfizer.it
+                </a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="uk-grid-margin uk-first-column">
+        <div class="uk-card uk-card-default uk-grid uk-grid-collapse uk-margin uk-grid-stack" uk-grid="">
+          <div class="uk-first-column">
+            <div class="uk-card-body">
+              <p style="font-size:2em" class="uk-text-bold uk-margin-remove-bottom uk-width-expand">Schuhfried</p>
+              <p class="uk-margin-remove-top uk-text-small"><a class="uk-link uk-link-text"
+                  href="https://www.schuhfried.it/" target="_blank">
+                  https://www.schuhfried.it/
+                </a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+</div>
+
+<div class="uk-section uk-margin-medium-top">
+  <div class="uk-container">
+    <h2 class="uk-heading-divider">Dove Siamo</h2>
+    <p>Associazione SIPPAS Via Roma 122 Scala A Int. 5, 00012 Guidonia (RM) - info@sippas.it</p>
+  </div>
+</div>
 {% endblock %}

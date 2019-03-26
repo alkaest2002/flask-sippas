@@ -13,7 +13,7 @@ from .models import Tags
 from .forms import *
 
 TAGS = Tags().getList()
-BLOG_PAGE_SIZE = 8
+BLOG_PAGE_SIZE = 10
 DASHBOARD_PAGE_SIZE = 25
 
 markdown = mistune.Markdown()
@@ -109,7 +109,7 @@ def posts_tagged_next(tag, id):
   posts = query_db('SELECT * FROM posts WHERE tags LIKE "%{}%" AND id < ? ORDER BY id DESC LIMIT {}'.format(tag, BLOG_PAGE_SIZE), [id])
 
   # no post no party
-  if posts == []: return redirect(url_for('blog_tagged.posts', tag=tag))
+  if posts == []: return redirect(url_for('blog.posts_tagged', tag=tag))
 
   # render view
   return render_template(

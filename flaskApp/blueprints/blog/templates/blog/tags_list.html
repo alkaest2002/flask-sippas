@@ -1,3 +1,4 @@
+<a href="{{ url_for('blog.posts') }}">#Tutti</a><br><br>
 {% for t in tags %}
   <a href="{{ url_for('blog.posts_tagged', tag=t) }}">{{ t }}</a><br>
 {% endfor %}

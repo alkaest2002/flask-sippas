@@ -1,7 +1,7 @@
-<div class="uk-grid uk-grid-match">
+<div class="uk-grid uk-grid-match uk-grid-small">
   {% for p in posts %}
   <div class="uk-width-1-2 uk-margin-bottom">
-    <div class="uk-card uk-card-default uk-card-body uk-margin">
+    <div class="uk-card uk-card-default uk-card-small uk-card-body uk-margin">
       {% for tag in p.tags.split(' ') %} <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a> {% endfor %}<br>
       {{ p.title  | capitalize}}<br>
       <a href="{{ url_for('blog.view_post', id=p.id) }}">leggi &rarr;</a>

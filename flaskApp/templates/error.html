@@ -4,6 +4,10 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Error {{ code }}</h1>
-  <a href="{{ url_for('main.index') }}">Homepage</a>
+<div class="uk-container">
+  <div class="uk-section">
+      <h1>Error {{ code }}</h1>
+      <a href="{{ url_for('main.index') }}">Homepage</a>
+  </div>
+</div>
 {% endblock %}

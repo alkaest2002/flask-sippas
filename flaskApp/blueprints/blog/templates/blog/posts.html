@@ -6,6 +6,9 @@
     <div class="uk-grid">
       <div class="uk-width-4-5">
         <h2 class="uk-heading-divider">Elenco degli articoli</h2>
+        <div class="uk-margin">
+          {% include pagination %}
+        </div> 
         {% include 'blog/posts_list.html' %}
       </div>
       <div class="uk-width-expand">

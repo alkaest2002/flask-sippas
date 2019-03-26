@@ -1,5 +1,12 @@
-
-<nav class="pagination" role="navigation" aria-label="pagination">
-  <a href="{{ url_for('blog.posts_tagged_prev', tag=tag, id=posts[0].id, ) }}" class="pagination-previous">Indietro</a>&nbsp;&nbsp;
-  <a href="{{ url_for('blog.posts_tagged_next', tag=tag, id=posts[-1].id) }}" class="pagination-next">Avanti</a>
-</nav>
+<ul class="uk-pagination uk-flex-cente">
+  <li>
+    <a href="{{ url_for('blog.posts_tagged_prev', tag=tag, id=posts[0].id, ) }}" class="pagination-previous">
+      <span class="uk-margin-small-right" uk-pagination-previous></span> Più recenti
+    </a>
+  </li>
+  <li>
+    <a href="{{ url_for('blog.posts_tagged_next', tag=tag, id=posts[-1].id) }}" class="pagination-next">
+      Meno recenti <span class="uk-margin-small-left" uk-pagination-next></span>
+    </a>
+  </li>
+</ul>
