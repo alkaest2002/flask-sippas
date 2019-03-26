@@ -1,6 +1,5 @@
 import os
-import mistune
-import copy
+import time  
 
 from flask import render_template, abort, redirect, url_for, flash
 from werkzeug.utils import secure_filename
@@ -15,8 +14,6 @@ from .forms import *
 TAGS = Tags().getList()
 BLOG_PAGE_SIZE = 10
 DASHBOARD_PAGE_SIZE = 25
-
-markdown = mistune.Markdown()
 
 # ################################################################################
 # ROUTES FOR ALL
@@ -199,7 +196,6 @@ def dashboard_next(id):
   # render view
   return render_template("blog/dashboard.html", posts=posts)
 
-
 @bp_blog.route("/dashboard/prev/offset/<int:id>")
 @login_required
 def dashboard_prev(id):
@@ -235,15 +231,17 @@ def create_post():
     except: teaser_filename = None
     
     # prepare data for other props
+    now = time.strftime('%Y-%m-%d')
     title = form_data["title"]
-    body = markdown(form_data["md"].read().decode("utf-8"))
+    body = form_data["md"].read().decode("utf-8")
     tags = " ".join(form_data["tags"])
     is_sticky = form_data["is_sticky"]
     author_id = current_user.get_author_id()
     
     # write data to sqlite
     cur = get_db().cursor()
-    cur.execute("INSERT INTO posts VALUES(NULL,?,?,?,?,?,?)", [ title, body, teaser_filename, tags, is_sticky, author_id ])
+    cur.execute("INSERT INTO posts VALUES(NULL,?,?,?,?,?,?,?,?,?)", 
+      [ title, body, teaser_filename, tags, is_sticky, author_id, now, now, now ])
     get_db().commit()
 
     # upload teaser image
@@ -294,18 +292,19 @@ def edit_post(id):
 
     # prepare data
     props = []
+    props.append(("updated_at", time.strftime('%Y-%m-%d')))
     props.append(("title", form_data["title"]))
     props.append(("teaser", teaser_filename))
     props.append(("tags", " ".join(form_data["tags"])))
     props.append(("is_sticky", form_data["is_sticky"]))
     props.append(("author_id", current_user.get_author_id()))
     if form_data["md"] != None:
-      props.append(("body"), markdown(form_data["md"].read().decode("utf-8")))
+      props.append(("body", form_data["md"].read().decode("utf-8")))
   
     # build field update
     update_fields = ", ".join([ "{}=?".format(field_label) for field_label, value in props if value != None ])
     params = [ value for _, value in props if value != None  ] + [id]
-    
+
     # write data to sqlite
     cur = get_db().cursor()
     cur.execute("UPDATE posts SET {} WHERE id=?".format(update_fields), params)

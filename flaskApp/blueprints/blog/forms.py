@@ -24,8 +24,8 @@ class PostCreateForm(FlaskForm):
   title = StringField(
     label = 'Titolo', 
     validators = [ 
-      DataRequired(message="Questo dato è obbligatorio."),
-      Length(max=50, message="Titolo troppo lungo (max 50 caratteri).")
+      DataRequired(message="Il titolo è obbligatorio."),
+      Length(max=100, message="Il titolo è troppo lungo (max 100 caratteri).")
     ],
     render_kw = { "required": False },
   )
@@ -35,7 +35,7 @@ class PostCreateForm(FlaskForm):
     'Tag', 
     choices=CHOICES,
     validators = [ 
-      DataRequired(message="Questo dato è obbligatorio."),
+      DataRequired(message="Le etichette sono obbligatorie (almeno una)."),
     ],
   )
 
@@ -53,6 +53,10 @@ class PostCreateForm(FlaskForm):
   md = FileField(
     label = "Testo dell'articolo",
   )
+
+  # --------------------------------------------------------------------------
+  # Custom validations
+  # --------------------------------------------------------------------------
 
   def validate_tags(form, field):
     if field.data == None: return
@@ -79,8 +83,7 @@ class PostUpdateForm(PostCreateForm):
   # markdown text
   md = FileField(
     label = "Testo dell'articolo",
-    validators=[
-    ]
+    validators = []
   )
 
   
