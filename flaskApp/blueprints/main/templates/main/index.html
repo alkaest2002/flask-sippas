@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<!-- FEATURETTES -->
 <div class="uk-section">
   <div class="uk-container">
     <h2 class="uk-heading-divider">Cosa facciamo</h2>
@@ -42,6 +43,7 @@
   </div>
 </div>
 
+<!-- BLOG -->
 <div class="uk-section">
   <div class="uk-container">
     <div class="uk-grid uk-grid-small">
@@ -50,15 +52,10 @@
         <div class="uk-child-width-1-1" uk-grid>
           {% for s in stickies %}
           <div>
-            <div class="uk-card uk-card-default uk-card-small">
-              <div class="uk-card-media-top">
-                <img src="{{ url_for('static', filename='blog/'+s.id |string+'/'+s.teaser) }}" />
-              </div>
-              <div class="uk-card-body">
-                <h3 class="uk-card-title uk-text-truncate">{{ s.title | capitalize }}</h3>
-                {% for tag in s.tags.split(' ') %}
-                <a href="{{ url_for('blog.posts_tagged', tag=tag) }}"><span class="uk-text-small">{{ tag }}</span></a>
-                {% endfor %}
+            <div class="uk-inline">
+              <img src="{{ url_for('static', filename='blog/'+s.id |string+'/'+s.teaser) }}" alt="">
+              <div class="uk-overlay uk-overlay-primary uk-position-bottom">
+                <h3 class="uk-text-truncate"><a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a></h3>
               </div>
             </div>
           </div>
@@ -87,6 +84,7 @@
   </div>
 </div>
 
+<!-- SPONSORS -->
 <div class="uk-section">
   <div class="uk-container">
     <h2 class="uk-heading-divider">Sostenitori</h2>
@@ -139,6 +137,7 @@
   </div>
 </div>
 
+<!-- CONTACTS -->
 <div class="uk-section uk-margin-medium-top">
   <div class="uk-container">
     <h2 class="uk-heading-divider">Dove Siamo</h2>
