@@ -1,11 +1,18 @@
 <div class="uk-grid uk-grid-match uk-grid-small">
-  {% for p in posts %}
-  <div class="uk-width-1-2 uk-margin-bottom">
-    <div class="uk-card uk-card-default uk-card-small uk-card-body uk-margin">
-      {% for tag in p.tags.split(' ') %} <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a> {% endfor %}<br>
-      {{ p.title  | capitalize}}<br>
-      <a href="{{ url_for('blog.view_post', id=p.id) }}">leggi &rarr;</a>
+{% for p in posts %}
+  <div class="uk-width-1-2@m uk-width-1-3@l uk-margin-bottom">
+    <div class="uk-card uk-card-default uk-card-small uk-margin">
+      {% if p.teaser and loop.index < 4 %}
+        <div class="uk-card-media-top">
+          <img src="{{ url_for('static', filename='blog/' + p.id | string + '/' + p.teaser) }}" />
+        </div>
+      {% endif %}
+      <div class="uk-card-body ">
+          {% for tag in p.tags.split(' ') %} <a href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a> {% endfor %}<br>
+          {{ p.title  | capitalize}}<br>
+          <a href="{{ url_for('blog.view_post', id=p.id) }}">leggi &rarr;</a>
+      </div>
     </div>
   </div>
-  {% endfor %}
+{% endfor %}
 </div>

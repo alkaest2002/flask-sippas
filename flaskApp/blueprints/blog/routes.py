@@ -87,9 +87,6 @@ def posts_tagged(tag):
   # fetch posts
   posts = query_db('SELECT * FROM posts WHERE tags LIKE "%{}%" ORDER BY id DESC LIMIT {}'.format(tag, BLOG_PAGE_SIZE))
   
-  # no post no party
-  if posts == []: return redirect(url_for('blog.posts'))
-
   # render view
   return render_template(
     "blog/posts.html", 
@@ -161,6 +158,10 @@ def view_post(id):
 # ROUTES FOR ADMINS
 # ################################################################################
 
+# -----------------------------------------------------------------
+# LIST POSTS + STICKIES
+# -----------------------------------------------------------------
+
 @bp_blog.route("/dashboard")
 @login_required
 def dashboard():
@@ -170,6 +171,20 @@ def dashboard():
   
   # render view
   return render_template("blog/dashboard.html", posts=posts)
+
+@bp_blog.route("/dashboard/sticky")
+@login_required
+def dashboard_sticky():
+  
+  # fetch posts
+  posts = query_db("SELECT * FROM posts WHERE is_sticky = 1 ORDER BY id DESC LIMIT {}".format(DASHBOARD_PAGE_SIZE))
+  
+  # render view
+  return render_template("blog/dashboard.html", posts=posts)
+
+# -----------------------------------------------------------------
+# LIST POSTS PER PAGE
+# -----------------------------------------------------------------
 
 @bp_blog.route("/dashboard/next/offset/<int:id>")
 @login_required
@@ -184,6 +199,7 @@ def dashboard_next(id):
   # render view
   return render_template("blog/dashboard.html", posts=posts)
 
+
 @bp_blog.route("/dashboard/prev/offset/<int:id>")
 @login_required
 def dashboard_prev(id):
@@ -197,16 +213,9 @@ def dashboard_prev(id):
   # render view
   return render_template("blog/dashboard.html", posts=posts[::-1])
 
-
-@bp_blog.route("/dashboard/sticky")
-@login_required
-def dashboard_sticky():
-  
-  # fetch posts
-  posts = query_db("SELECT * FROM posts WHERE is_sticky = 1 ORDER BY id DESC LIMIT {}".format(DASHBOARD_PAGE_SIZE))
-  
-  # render view
-  return render_template("blog/dashboard.html", posts=posts)
+# -----------------------------------------------------------------
+# CREATE/UPDATE/DELETE POSTS + RESET STICKIES
+# -----------------------------------------------------------------
 
 @bp_blog.route("/create", methods=['GET', 'POST'])
 @login_required
@@ -268,7 +277,7 @@ def edit_post(id):
   data["tags"] = post["tags"].split(" ")
   data["is_sticky"] = post["is_sticky"]
   form = PostUpdateForm( data = data )
-
+  
   # on validate
   if form.validate_on_submit():
 
@@ -316,7 +325,6 @@ def edit_post(id):
 
   # render view
   return render_template("blog/post_create_update.html",  form = form, post = post, tags = Tags().getList())
-
 
 @bp_blog.route("/delete/<int:id>", methods=['post'])
 @login_required

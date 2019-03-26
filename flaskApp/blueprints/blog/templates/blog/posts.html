@@ -6,10 +6,16 @@
     <div class="uk-grid">
       <div class="uk-width-4-5">
         <h2 class="uk-heading-divider">Elenco degli articoli</h2>
-        <div class="uk-margin">
-          {% include pagination %}
-        </div> 
-        {% include 'blog/posts_list.html' %}
+        {% if posts %}
+          <div class="uk-margin">
+            {% include pagination %}
+          </div> 
+          {% include 'blog/posts_list.html' %}
+        {% else %}
+          <div class="uk-margin">
+            Nessun articolo trovato.
+          </div>
+        {% endif %}
       </div>
       <div class="uk-width-expand">
         <div>
@@ -18,9 +24,11 @@
         </div>
       </div>
     </div> 
-    <div class="uk-margin">
-      {% include pagination %}
-    </div>   
+    {% if posts %}
+      <div class="uk-margin">
+        {% include pagination %}
+      </div> 
+    {% endif %}  
   </div>
 </div>
 {% endblock %}

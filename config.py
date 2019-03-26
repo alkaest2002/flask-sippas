@@ -7,6 +7,7 @@ load_dotenv(dotenv_path=Path('.') / '.env')
 
 # base config
 class Config(object):
+  MAX_CONTENT_LENGTH = .5 * 1024 * 1024 # max 512Kb
   DATABASE = os.getenv("SQLITE_DB")
   WTF_CSRF_SECRET_KEY = os.getenv("WTF_CSRF_SECRET_KEY")
 

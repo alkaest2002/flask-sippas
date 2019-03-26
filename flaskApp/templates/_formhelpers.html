@@ -9,7 +9,7 @@
         {{ field.label }}
 
         {% if field.errors %}
-          <div class="uk-text-danger uk-text-small" style="margin-top: 3px">
+          <div class="uk-text-danger uk-text-small" style="padding-top: 5px">
             {% for error in field.errors %}
               {{ error }}<br/>
             {% endfor %}
@@ -30,9 +30,9 @@
           
           {% set class = [ field.render_kw['class']] | join(" ") %}
           {{ field(class = class) | safe }}
-          
+
           {% if field.errors %}
-            <div class="uk-text-danger uk-text-small" style="margin-top: 3px">
+            <div class="uk-text-danger uk-text-small" style="padding-top: 5px; clear:left">
               {% for error in field.errors %}
                 {{ error }}<br/>
               {% endfor %}
@@ -49,7 +49,7 @@
         {{ field(class = class) | safe }}
         
         {% if field.errors %}
-          <div class="uk-text-danger uk-text-small" style="margin-top: 3px">
+          <div class="uk-text-danger uk-text-small" style="padding-top: 5px">
             {% for error in field.errors %}
               {{ error }}<br/>
             {% endfor %}
@@ -71,7 +71,7 @@
         {{ field(class = class) | safe }}
       
         {% if field.errors %}
-          <div class="uk-text-danger uk-text-small" style="margin-top: 3px">
+          <div class="uk-text-danger uk-text-small" style="padding-top: 5px">
             {% for error in field.errors %}
               {{ error }}<br/>
             {% endfor %}

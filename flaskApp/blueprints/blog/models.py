@@ -2,16 +2,20 @@
 TAGS = [
   "#Aeronautica",
   "#Benessere",
-  "#Formazione",
+  "#CorpiDelloStato",
   "#Dipendenze",
   "#Eventi",
-  "#Incivolo",
+  "#Farmaci",
+  "#Farmacologia",
+  "#Formazione",
   "#ForzeArmate",
+  "#Incivolo",
   "#Medicina",
   "#Neuroscienze",
   "#NeuroImaging",
   "#Psichiatria",
   "#Psicologia", 
+  "#Varie"
 ]
 
 # ################################################################################
