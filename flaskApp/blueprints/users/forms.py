@@ -12,7 +12,7 @@ class LoginForm(FlaskForm):
   username = StringField(
     label = 'Username', 
     validators = [ 
-        DataRequired(message="Questo dato è obbligatorio."),
+      DataRequired(message="La username è obbligatoria."),
     ],
     render_kw = { "required": False },
     filters=[ lambda x: x and x.lower() ],
@@ -21,8 +21,8 @@ class LoginForm(FlaskForm):
   # password
   password = PasswordField(
     label = 'Password', 
-    render_kw = { "required": False },
     validators = [
-        DataRequired(message="Questo dato è obbligatorio."),
+      DataRequired(message="La password è obbligatoria."),
     ],
+    render_kw = { "required": False }
   )

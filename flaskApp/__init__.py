@@ -15,8 +15,7 @@ from flaskApp.extensions.db_ext import attach_db
 def create_app(cfg = None):
         
   # config app
-  if cfg is not None: 
-    app.config.from_object(cfg)
+  if cfg is not None: app.config.from_object(cfg)
   
   # attach cache manager
   attach_cache(app)
