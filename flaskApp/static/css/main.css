@@ -1,0 +1,47 @@
+html {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.5;
+  background: #f8f8f8;
+  color: rgba(3,27,78,0.7) !important;
+}
+
+h1, .uk-h1, h2, .uk-h2, h3, .uk-h3, h4, .uk-h4, h5, .uk-h5, h6, .uk-h6 {
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  margin: 0 0 20px 0;
+  font-weight: normal;
+  color: #031b4e;
+  text-transform: none;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+thead tr th {
+  border-top: 1px solid #ddd;
+}
+
+.uk-section {
+  padding: 0px;
+  padding-top: 30px;
+}
+
+.uk-card-default {
+  color: rgba(3,27,78,0.7) !important;
+  box-shadow: none;
+  border: 1px solid #ddd;
+}
+
+.uk-card-secondary {
+  background-color: #1e87f0;
+}
+
+.uk-table-striped tbody tr:nth-of-type(odd), .uk-table-striped>tr:nth-of-type(odd), .uk-list-striped>li:nth-of-type(odd) {
+  background: #e6e6e6;
+}
+
+.uk-table-small td, .uk-table-small th {
+  padding: 6px 12px;
+}
