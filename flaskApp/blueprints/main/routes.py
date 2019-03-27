@@ -11,9 +11,9 @@ from . import bp_main
 def index():
 
   # fetch stickies & latest articles from blog
-  stickies = query_db('SELECT * FROM posts WHERE is_sticky == 1 ORDER BY id DESC LIMIT 2')
+  stickies = query_db('SELECT * FROM posts WHERE is_sticky == 1 ORDER BY updated_at DESC LIMIT 2')
   latest = query_db('SELECT * FROM posts  WHERE is_sticky == 0 ORDER BY id DESC LIMIT {}'.format(4 if len(stickies) < 2 else 7))
-
+  
   # render view
   return render_template("main/index.html", latests=latest, stickies=stickies )
 
