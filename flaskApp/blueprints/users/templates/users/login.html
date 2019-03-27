@@ -2,20 +2,20 @@
 {% from "_formhelpers.html" import render_field %}
 
 {% block content %}
-  <h3>Login</h3>
+<h3>Login</h3>
 
-  <form method="post" novalidate>
-          
-    {% for field in form  %}
-      <div class="uk-margin">
-        {{ render_field(field) }}
-      </div>
-    {% endfor %}
+<form method="post" novalidate>
 
-    <div class="uk-margin">
-      <button class="uk-button uk-button-primary" type="submit">Login</button>
-    </div>
-       
-  </form>
-  
+  {% for field in form  %}
+  <div class="uk-margin">
+    {{ render_field(field) }}
+  </div>
+  {% endfor %}
+
+  <div class="uk-margin">
+    <button class="uk-button uk-button-primary" type="submit">Login</button>
+  </div>
+
+</form>
+
 {% endblock %}
