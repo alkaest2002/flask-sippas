@@ -13,7 +13,7 @@ from .forms import *
 @bp_users.before_request
 def before_request():
 
-  # logged in users may not visit login/register page
+  # logged in users may not visit login page
   if current_user.is_authenticated and request.endpoint in [ 'users.login' ]:
     return redirect(url_for('main.index'))
 

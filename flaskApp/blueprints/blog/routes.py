@@ -240,7 +240,7 @@ def create_post():
     except: teaser_filename = None
     
     # prepare data for other props
-    now = time.strftime('%Y-%m-%d')
+    now = time.strftime('%Y-%m-%d %H:%M:%S')
     title = form_data["title"]
     body = form_data["md"].read().decode("utf-8")
     tags = " ".join(form_data["tags"])
@@ -278,11 +278,13 @@ def edit_post(id):
   # no post no party
   if post == None: return abort(404) 
 
-  # init form with post data
+  # prepare data to populate form with
   data = {}
   data["title"] = post["title"]
   data["tags"] = post["tags"].split(" ")
   data["is_sticky"] = post["is_sticky"]
+  
+  # init form
   form = PostUpdateForm( data = data )
   
   # on validate
@@ -301,7 +303,7 @@ def edit_post(id):
 
     # prepare data
     props = []
-    props.append(("updated_at", time.strftime('%Y-%m-%d')))
+    props.append(("updated_at", time.strftime('%Y-%m-%d %H:%M:%S')))
     props.append(("title", form_data["title"]))
     props.append(("teaser", teaser_filename))
     props.append(("tags", " ".join(form_data["tags"])))

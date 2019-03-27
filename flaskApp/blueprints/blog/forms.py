@@ -89,4 +89,9 @@ class PostUpdateForm(PostCreateForm):
     validators = []
   )
 
+  # non need to vcustom validate is_sticky on update
+  def validate_is_sticky(form, field):
+    pass
+
+
   

@@ -47,18 +47,30 @@
 <div class="uk-section">
   <div class="uk-container">
     <div class="uk-grid uk-grid-small">
-      <div class="uk-margin uk-width-2-5@s">
+      <div class="uk-margin uk-width-2-5@m">
         <h2 class="uk-heading-divider">Articoli in evidenza</h2>
-        <div class="uk-child-width-1-1" uk-grid>
+        <div class="uk-grid uk-child-width-1-1">
           {% for s in stickies %}
-          <div>
-            <div class="uk-inline">
-              <img src="{{ url_for('static', filename='blog/'+s.id |string+'/'+s.teaser) }}" alt="">
-              <div class="uk-overlay uk-overlay-primary uk-position-bottom">
-                <h3 class="uk-text-truncate"><a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a></h3>
+            {% if s.teaser %}
+              <div class="uk-margin-bottom">
+                <div class="uk-inline">
+                    <img src="{{ url_for('static', filename='blog/'+s.id |string+'/'+s.teaser) }}" alt="">
+                  <div class="uk-overlay uk-overlay-primary uk-position-bottom">
+                    <h3 class="uk-text-truncate"><a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a></h3>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            {% else %}
+              <div style="height:300px">
+                <div class="uk-card uk-card-primary uk-height-1-1">
+                  <div class="uk-card-body">
+                    <h3 class="uk-text-truncate uk-position-center uk-padding">
+                      <a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
           {% endfor %}
         </div>
       </div>
