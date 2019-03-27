@@ -70,9 +70,9 @@
     </form>
     {% if post %}
     <form method="post" action="{{ url_for('blog.delete_post', id=post.id) }}">
-      <button class="uk-button uk-button-text uk-text-danger uk-text-small" type="submit">Elimina
+      <button class="uk-button uk-button-link uk-text-small" type="submit">Elimina
         articolo</button><br>
-      <span class="uk-text-small uk-text-danger">(Heads up! Operazione irreversibile)</span>
+      <span class="uk-text-small">(Heads up! Operazione irreversibile)</span>
     </form>
     {% endif %}
   </div>

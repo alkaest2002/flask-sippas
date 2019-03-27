@@ -18,42 +18,50 @@
     <div class="uk-width-4-5">
       <h2 class="uk-heading-divider">Elenco articoli</h2>
       <div>
-          <ul class="uk-pagination">
-            <li>
-              <a href="{{ url_for('blog.dashboard_prev', id=posts[0].id) }}" class="pagination-previous">
-                <span class="uk-margin-small-right" uk-pagination-previous></span> Più recenti
-              </a>
-            </li>
-            <li>
-              <a href="{{ url_for('blog.dashboard_next', id=posts[-1].id) }}" class="pagination-next">
-                Meno recenti <span class="uk-margin-small-left" uk-pagination-next></span>
-              </a>
-            </li>
-          </ul>
-        </div>
+        <ul class="uk-pagination">
+          <li>
+            <a href="{{ url_for('blog.dashboard_prev', id=posts[0].id) }}" class="pagination-previous">
+              <span class="uk-margin-small-right" uk-pagination-previous></span> Più recenti
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('blog.dashboard_next', id=posts[-1].id) }}" class="pagination-next">
+              Meno recenti <span class="uk-margin-small-left" uk-pagination-next></span>
+            </a>
+          </li>
+        </ul>
+      </div>
       <table class="uk-table uk-table-small uk-table-striped">
         <thead>
           <tr>
+            <th style="width:7%"></th>
             <th style="width:5%">Id</th>
+            <th style="width:3%">Evid.</th>
             <th style="width:45%">Titolo</th>
-            <th style="width:45%">Etichette</th>
-            <th style="width:5%">Evid.</th>
+            <th style="width:40%">Etichette</th>
           </tr>
         </thead>
         <tbody>
           {% for p in posts %}
           <tr>
             <td>
-              <a href="{{ url_for('blog.edit_post', id=p.id) }}">{{ p.id }}</a>
+              <a  href="{{ url_for('blog.view_post', id=p.id) }}"><span uk-icon="file-text"></span></a><a href="{{ url_for('blog.edit_post', id=p.id) }}"><span uk-icon="file-edit"></span></a>
+            </td>
+            <td>
+              {{ p.id }}
+            </td>
+            <td class="uk-text-center">
+              {% if p.is_sticky %}
+                <span class="uk-margin-small-right" uk-icon="check"></span>
+              {% else %}
+              <span>-</span>
+              {% endif %}
             </td>
             <td class="uk-text-truncate">
-              <a href="{{ url_for('blog.view_post', id=p.id) }}">{{ p.title | capitalize }}</a>
+              {{ p.title | capitalize }}
             </td>
             <td>
               {{ p.tags }}
-            </td>
-            <td>
-              {{ p.is_sticky }}
             </td>
           </tr>
           {% else %}
