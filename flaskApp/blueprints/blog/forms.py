@@ -56,13 +56,13 @@ class PostCreateForm(FlaskForm):
   # Custom validations
   # --------------------------------------------------------------------------
 
-  def validata_is_sticky(form, field):
-    if field.data == None: return
-    if form.teaser.data == None:
+  def validate_is_sticky(form, field):
+    if not field.data: return
+    if not form.teaser.data:
       raise ValidationError('Gli articoli in evidenza devono avere un"immagine')
 
   def validate_tags(form, field):
-    if field.data == None: return
+    if not field.data: return
     accepted_tags = Tags().getList()
     if not all(elem in accepted_tags for elem in field.data):
       raise ValidationError('Etichette non riconosciute.')
@@ -70,14 +70,14 @@ class PostCreateForm(FlaskForm):
       raise ValidationError('Massimo tre etichette consentite.')
 
   def validate_teaser(form, field):
+    if not field.data: return
     pattern = re.compile(r"[^\\]*\.(jpg|jpeg|gif|png)$")
-    if field.data == None: return
     if not pattern.match(field.data.filename):
       raise ValidationError('Tipo di immagine non compatibile.')
 
   def validate_md(form, field):
+    if not field.data: return
     pattern = re.compile(r"[^\\]*\.(md|txt)$")
-    if field.data == None: return
     if not pattern.match(field.data.filename):
       raise ValidationError('Tipo di file markdown non compatibile.')
 
