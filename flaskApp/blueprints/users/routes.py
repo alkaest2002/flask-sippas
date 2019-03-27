@@ -1,7 +1,6 @@
 
 from flask import request, render_template, flash, redirect, url_for, abort, current_app
 from flask_login import current_user, login_user, login_required, logout_user, current_user
-from itsdangerous import URLSafeTimedSerializer
 
 from . import bp_users
 from .models import USERS, User 
