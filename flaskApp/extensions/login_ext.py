@@ -10,7 +10,7 @@ class MyAnonymousUser():
   def __init__(self):
     self.is_active = False
     self.is_anonymous = True
-    self.role = 'anonymous'
+    self.role = 'guest'
     self.is_authenticated = False
 
   def get_id(self):

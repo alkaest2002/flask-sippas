@@ -4,7 +4,7 @@
     <div class="uk-card uk-card-default uk-card-small uk-margin">
       {% if p.teaser %}
       <div class="uk-card-media-top">
-        <img src="{{ url_for('static', filename='blog/' + p.id | string + '/' + p.teaser) }}" />
+        <img src="{{ url_for('static', filename='blog/' + p.teaser | replace('#', p.id | string)) }}" />
       </div>
       {% endif %}
       <div class="uk-card-body">

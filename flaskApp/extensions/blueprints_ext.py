@@ -1,5 +1,4 @@
 from flask import render_template, jsonify
-from flaskApp.utils.errors import ApiError
 
 from flaskApp.blueprints.main import bp_main
 from flaskApp.blueprints.users import bp_users

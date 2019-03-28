@@ -1,7 +1,6 @@
 
 TAGS = [
   "#Aeronautica",
-  "#Benessere",
   "#CorpiDelloStato",
   "#Dipendenze",
   "#Eventi",
@@ -15,6 +14,7 @@ TAGS = [
   "#NeuroImaging",
   "#Psichiatria",
   "#Psicologia", 
+  "#Salute",
   "#Varie"
 ]
 

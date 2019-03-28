@@ -1,5 +1,6 @@
 import os
-import time  
+import datetime
+import time
 
 from flaskApp import app
 from flask import render_template, abort, redirect, url_for, flash
@@ -7,6 +8,7 @@ from werkzeug.utils import secure_filename
 from flaskApp.db.sqlite import get_db, query_db
 from flask_login import login_required, current_user
 from flaskApp.extensions.cache_ext import cache
+from flaskApp.utils.decorators import has_role
 
 from . import bp_blog
 from .models import Tags 
@@ -170,6 +172,7 @@ def view_post(id):
 
 @bp_blog.route("/dashboard")
 @login_required
+@has_role(["author", "editor", "admin"])
 def dashboard():
   
   # fetch posts
@@ -194,6 +197,7 @@ def dashboard_sticky():
 
 @bp_blog.route("/dashboard/next/offset/<int:id>")
 @login_required
+@has_role(["author", "editor", "admin"])
 def dashboard_next(id):
 
   # fetch posts
@@ -207,6 +211,7 @@ def dashboard_next(id):
 
 @bp_blog.route("/dashboard/prev/offset/<int:id>")
 @login_required
+@has_role(["author", "editor", "admin"])
 def dashboard_prev(id):
 
   # fetch posts
@@ -224,6 +229,7 @@ def dashboard_prev(id):
 
 @bp_blog.route("/create", methods=['GET', 'POST'])
 @login_required
+@has_role(["author", "editor", "admin"])
 def create_post():
 
   # init form
@@ -234,30 +240,35 @@ def create_post():
 
     # cache form data
     form_data = form.data
-  
-    # prepare name for teaser image
-    try: teaser_filename = secure_filename(form_data["teaser"].filename)
-    except: teaser_filename = None
-    
+     
     # prepare data for other props
-    now = time.strftime('%Y-%m-%d %H:%M:%S')
+    now = datetime.datetime.now()
+    date = "{}-{}-{} {}:{}:{}".format(now.year, now.month, now.day, now.hour, now.minute, now.second)
     title = form_data["title"]
     body = form_data["md"].read().decode("utf-8")
     tags = " ".join(form_data["tags"])
     is_sticky = form_data["is_sticky"]
-    author_id = current_user.get_author_id()
+    author = current_user.get_author()
+
+    # prepare name for teaser image
+    try: 
+      teaser_filename = "{}/{}/{}/{}".format(
+        now.year, now.month, "#", 
+        secure_filename(form_data["teaser"].filename)
+      )
+    except: teaser_filename = None
     
     # write data to sqlite
     cur = get_db().cursor()
     cur.execute("INSERT INTO posts VALUES(NULL,?,?,?,?,?,?,?,?,?)", 
-      [ title, body, teaser_filename, tags, is_sticky, author_id, now, now, now ])
+      [ title, body, teaser_filename, tags, is_sticky, author, date, date, date ])
     get_db().commit()
 
     # upload teaser image
     if teaser_filename:
-      path = os.path.join(app.root_path, 'static', 'blog', str(cur.lastrowid))
+      path = os.path.join(app.root_path, 'static', 'blog', str(now.year), str(now.month), str(cur.lastrowid))
       if not os.path.exists(path): os.makedirs(path)
-      form_data["teaser"].save(os.path.join(path, teaser_filename))
+      form_data["teaser"].save(os.path.join(path, secure_filename(form_data["teaser"].filename)))
     
     # flash
     flash("Articolo creato correttamente.", "primary")
@@ -270,6 +281,7 @@ def create_post():
 
 @bp_blog.route("/edit/<int:id>", methods=['get','post'])
 @login_required
+@has_role(["author", "editor", "admin"])
 def edit_post(id):
 
   # fetch post to be edited
@@ -294,8 +306,18 @@ def edit_post(id):
     form_data = form.data
        
     # prepare name for teaser image
-    try: teaser_filename = secure_filename(form_data["teaser"].filename)
+    try: 
+      prefix = "/".join(post["created_at"].split("-")[0:2]) + "/#/"
+      teaser_filename = prefix + secure_filename(form_data["teaser"].filename)
     except: teaser_filename = None
+
+     # upload teaser image
+    if teaser_filename:
+      path = os.path.join(
+        app.root_path, 'static', 'blog', 
+        post["created_at"].split("-")[0], post["created_at"].split("-")[1], str(id))
+      if not os.path.exists(path): os.makedirs(path)
+      form_data["teaser"].save(os.path.join(path, secure_filename(form_data["teaser"].filename)))
    
     # -----------------------------------------------------------------
     # update post in sqlite
@@ -308,7 +330,6 @@ def edit_post(id):
     props.append(("teaser", teaser_filename))
     props.append(("tags", " ".join(form_data["tags"])))
     props.append(("is_sticky", form_data["is_sticky"]))
-    props.append(("author_id", current_user.get_author_id()))
     if form_data["md"] != None:
       props.append(("body", form_data["md"].read().decode("utf-8")))
   
@@ -321,12 +342,6 @@ def edit_post(id):
     cur.execute("UPDATE posts SET {} WHERE id=?".format(update_fields), params)
     get_db().commit()
 
-    # upload teaser image
-    if teaser_filename:
-      path = os.path.join(app.root_path, 'static', 'blog', str(id))
-      if not os.path.exists(path): os.makedirs(path)
-      form_data["teaser"].save(os.path.join(path, teaser_filename))
-
     # flash
     flash("L'articolo è stato creato correttamente", "primary")
 
@@ -338,6 +353,7 @@ def edit_post(id):
 
 @bp_blog.route("/delete/<int:id>", methods=['post'])
 @login_required
+@has_role(["author", "editor", "admin"])
 def delete_post(id):
   
   # delete post
@@ -352,6 +368,7 @@ def delete_post(id):
 
 @bp_blog.route("/stickies/reset")
 @login_required
+@has_role(["author", "editor", "admin"])
 def reset_stickies():
   
   # delete post

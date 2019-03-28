@@ -1,22 +1,12 @@
 
 from flask import request, render_template, flash, redirect, url_for, abort, current_app
 from flask_login import current_user, login_user, login_required, logout_user, current_user
+from flaskApp.db.sqlite import query_db
+from flaskApp.utils.decorators import has_role
 
 from . import bp_users
-from .models import USERS, User 
+from .models import User 
 from .forms import *
-
-# ################################################################################
-# BEFORE EACH REQUEST
-# ################################################################################
-
-@bp_users.before_request
-def before_request():
-
-  # logged in users may not visit login page
-  if current_user.is_authenticated and request.endpoint in [ 'users.login' ]:
-    return redirect(url_for('main.index'))
-
 
 # ################################################################################
 # ROUTES
@@ -35,6 +25,7 @@ def unauthorized():
 # LOGIN
 # -----------------------------------------------------------------
 @bp_users.route("/login", methods=("get", "post"))
+@has_role(["guest"])
 def login():
 
     # init form
@@ -43,26 +34,29 @@ def login():
     # on validate
     if form.validate_on_submit():
 
+      # cache form data
+      form_data = form.data
+
       # fetch user
-      userObj = USERS[form.username.data] if form.username.data in USERS else None
+      user = query_db("SELECT * FROM users WHERE username = ?", [form_data["username"]], one=True)
       
       # no user found
-      if userObj is None:
+      if user is None:
           
         # flash error
-        flash("<b>Oops!</b> Username non presente nel server.", "error")
+        flash("<b>Oops!</b> Username non presente nel server.", "danger")
         
         # redirect to login
         return redirect(url_for('users.login'))
-            
+       
       # istantiate user
-      user = User(**userObj)
+      user = User(*user)
 
-      # if credentials are invalid
-      if not user.check_pass(form.password.data):
+      # if password is invalid
+      if not user.check_pass(form_data["password"]):
           
           # flash error
-          flash("<b>Oops!</b> Credenziali non valide.", "error")
+          flash("<b>Oops!</b> Credenziali non valide.", "danger")
           
           # redirect to login
           return redirect(url_for('users.login'))

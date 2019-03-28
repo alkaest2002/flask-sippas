@@ -7,7 +7,7 @@
   <div class="uk-container">
     <h2 class="uk-heading-divider">Cosa facciamo</h2>
     <div class="uk-grid uk-grid-large uk-child-width-1-2@m">
-      <div class="uk-margin">
+      <div class="uk-margin-bottom">
         <h3>01. Ricerca scientifica</h3>
         <p>Svolgiamo attività di ricerca in ambito aeronautico e spaziale, con particolare riferimento agli aspetti
           psichiatrici, psicologici e attitudinali dell'esperienza del volo.</p>
@@ -15,7 +15,7 @@
           data-src="{{ url_for('static', filename='img/research.jpg') }}" uk-img="">
         </div>
       </div>
-      <div class="uk-margin uk-margin-remove-top">
+      <div class="uk-margin-bottom">
         <h3>02. Divulgazione</h3>
         <p>Promuoviamo la divulgazione delle conoscenze medico-psicologiche relative ai settori aeronautico e
           spaziale, rivolgendoci al mondo scientifico, alle autorità politiche, ai mass media e al pubblico.</p>
@@ -23,7 +23,7 @@
           data-src="{{ url_for('static', filename='img/tell.jpg') }}" uk-img="">
         </div>
       </div>
-      <div class="uk-margin">
+      <div class="uk-margin-bottom">
         <h3>03. Collaborazioni</h3>
         <p>Proproniamo la nostra collaborazione agli enti pubblici, alle imprese e agli organismi scientifici che
           sono direttamente o indirettamente coinvolti nelle attività aeronautiche e spaziali.</p>
@@ -31,7 +31,7 @@
           data-src="{{ url_for('static', filename='img/teamwork.jpg') }}" uk-img="">
         </div>
       </div>
-      <div class="uk-margin">
+      <div>
         <h3>04. Servizi</h3>
         <p>Offriamo la nostra esperienza nel campo della selezione del personale, della
           prevenzione/cura/riabilitazione dei disturbi lavoro-correlati e a rilevanza medico-legale.</p>
@@ -54,7 +54,7 @@
             {% if s.teaser %}
               <div class="uk-margin-bottom">
                 <div class="uk-inline">
-                    <img src="{{ url_for('static', filename='blog/'+s.id |string+'/'+s.teaser) }}" alt="">
+                    <img src="{{ url_for('static', filename='blog/' + s.teaser | replace('#', s.id | string)) }}" alt="">
                   <div class="uk-overlay uk-overlay-primary uk-position-bottom">
                     <h3 class="uk-text-truncate"><a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a></h3>
                   </div>

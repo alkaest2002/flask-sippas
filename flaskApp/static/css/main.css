@@ -4,6 +4,10 @@ html {
   font-weight: normal;
   line-height: 1.5;
   background: #f8f8f8;
+  color: rgba(3,27,78,0.7);
+}
+
+em {
   color: rgba(3,27,78,0.7) !important;
 }
 
@@ -44,4 +48,16 @@ thead tr th {
 
 .uk-table-small td, .uk-table-small th {
   padding: 6px 12px;
+}
+
+.uk-alert-danger {
+  background: #fef4f6;
+  color: #f0506e;
+  border: 1px dashed #ff1e1e;
+}
+
+.uk-alert-primary {
+  background: #d8eafc;
+  color: #1e87f0;
+  border: 1px dashed;
 }
