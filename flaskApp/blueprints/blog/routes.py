@@ -148,7 +148,7 @@ def posts_tagged_prev(tag, id):
 # -----------------------------------------------------------------
 
 @bp_blog.route("/view/<int:id>")
-@cache.cached()
+@cache.cached(timeout=60*60*24*30)
 def view_post(id):
 
   # fetch post
