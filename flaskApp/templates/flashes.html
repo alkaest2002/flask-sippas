@@ -1,6 +1,6 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
 
-{% if messages %}
+{% if messages and  messages[-1][0] != 'hide' %}
   <div class="uk-alert uk-alert-{{ messages[-1][0] }} uk-margin-bottom" uk-alert>
     <a class="uk-alert-close" uk-close></a>
     <div>

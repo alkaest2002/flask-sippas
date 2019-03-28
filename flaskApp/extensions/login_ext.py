@@ -27,4 +27,4 @@ def attach_login_manager(app):
   login_manager.anonymous_user = MyAnonymousUser
   login_manager.login_view = "users.login"
   login_manager.login_message = u"Effettua il login per accedere a questa risorsa."
-  login_manager.login_message_category = "info"
+  login_manager.login_message_category = "hide"
