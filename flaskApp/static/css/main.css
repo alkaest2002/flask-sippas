@@ -61,3 +61,14 @@ thead tr th {
   color: #1e87f0;
   border: 1px dashed;
 }
+
+.uk-notification-message {
+  position: relative;
+  top: 15px;
+  left: -15px;
+  background: #aacef4;
+  color: #031a4e;
+  border: 1px dashed #031a4e;
+  cursor: pointer;
+  font-size: .8em;
+}
