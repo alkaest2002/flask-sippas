@@ -51,26 +51,26 @@
         <h2 class="uk-heading-divider">Articoli in evidenza</h2>
         <div class="uk-grid uk-child-width-1-1">
           {% for s in stickies %}
-            {% if s.teaser %}
-              <div class="uk-margin-bottom">
-                <div class="uk-inline">
-                    <img src="{{ url_for('static', filename='blog/' + s.teaser | replace('#', s.id | string)) }}" alt="">
-                  <div class="uk-overlay uk-overlay-primary uk-position-bottom">
-                    <h3 class="uk-text-truncate"><a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a></h3>
-                  </div>
-                </div>
+          {% if s.teaser %}
+          <div class="uk-margin-bottom">
+            <div class="uk-inline">
+              <img src="{{ url_for('static', filename='blog/' + s.teaser | replace('#', s.id | string)) }}" alt="">
+              <div class="uk-overlay uk-overlay-primary uk-position-bottom">
+                <h3 class="uk-text-truncate"><a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a></h3>
               </div>
-            {% else %}
-              <div style="height:300px">
-                <div class="uk-card uk-card-primary uk-height-1-1">
-                  <div class="uk-card-body">
-                    <h3 class="uk-text-truncate uk-position-center uk-padding">
-                      <a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a>
-                    </h3>
-                  </div>
-                </div>
+            </div>
+          </div>
+          {% else %}
+          <div style="height:300px">
+            <div class="uk-card uk-card-primary uk-height-1-1">
+              <div class="uk-card-body">
+                <h3 class="uk-text-truncate uk-position-center uk-padding">
+                  <a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a>
+                </h3>
               </div>
-            {% endif %}
+            </div>
+          </div>
+          {% endif %}
           {% endfor %}
         </div>
       </div>
@@ -107,7 +107,7 @@
         <div class="uk-card uk-card-default uk-grid uk-grid-collapse uk-margin uk-grid-stack" uk-grid="">
           <div class="uk-first-column">
             <div class="uk-card-body">
-              <p style="font-size:2em" class="uk-text-bold uk-margin-remove-bottom uk-width-expand">Angelini</p>
+              <h1 class="uk-margin-remove-bottom uk-width-expand">Angelini</h1>
               <p class="uk-margin-remove-top uk-text-small"><a class="uk-link uk-link-text"
                   href="https://www.angelini.it" target="_blank">
                   https://www.angelini.it
@@ -121,7 +121,7 @@
         <div class="uk-card uk-card-default uk-grid uk-grid-collapse uk-margin uk-grid-stack" uk-grid="">
           <div class="uk-first-column">
             <div class="uk-card-body">
-              <p style="font-size:2em" class="uk-text-bold uk-margin-remove-bottom uk-width-expand">Pfizer</p>
+              <h1 class="uk-margin-remove-bottom uk-width-expand">Pfizer</h1>
               <p class="uk-margin-remove-top uk-text-small"><a class="uk-link uk-link-text" href="http://www.pfizer.it"
                   target="_blank">
                   http://www.pfizer.it
@@ -135,7 +135,7 @@
         <div class="uk-card uk-card-default uk-grid uk-grid-collapse uk-margin uk-grid-stack" uk-grid="">
           <div class="uk-first-column">
             <div class="uk-card-body">
-              <p style="font-size:2em" class="uk-text-bold uk-margin-remove-bottom uk-width-expand">Schuhfried</p>
+              <h1 class="uk-margin-remove-bottom uk-width-expand">Schuhfried</h1>
               <p class="uk-margin-remove-top uk-text-small"><a class="uk-link uk-link-text"
                   href="https://www.schuhfried.it/" target="_blank">
                   https://www.schuhfried.it/
@@ -160,13 +160,12 @@
 
 {% block scripts %}
 <script>
-  if (document.cookie != "cookie_consent=true")
-  {
+  if (document.cookie != "cookie_consent=true") {
     const msg = "Questo sito si avvale di <b>cookie tecnici</b> per fornire all'utente finale la migliore esperienza d'uso. Proseguendo la navigazione all'interno del sito, acconsenti all’uso dei cookie.<br><br><b>Clicca qui</b> per chiudere questa finestra"
     UIkit.notification(msg, { pos: 'top-right', timeout: 6000 });
     UIkit.util.on(".uk-notification", 'close', function () {
       document.cookie = "cookie_consent=true";
-    }); 
+    });
   }
 </script>
 {% endblock scripts %}
