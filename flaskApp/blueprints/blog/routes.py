@@ -241,7 +241,7 @@ def create_post():
     # cache form data
     form_data = form.data
      
-    # prepare data for other props
+    # prepare data
     now = datetime.datetime.now()
     date = "{}-{}-{} {}:{}:{}".format(now.year, now.month, now.day, now.hour, now.minute, now.second)
     title = form_data["title"]
