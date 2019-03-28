@@ -15,7 +15,7 @@ from .models import Tags
 from .forms import *
 
 TAGS = Tags().getList()
-BLOG_PAGE_SIZE = 10
+BLOG_PAGE_SIZE = 9
 DASHBOARD_PAGE_SIZE = 25
 
 # ################################################################################
