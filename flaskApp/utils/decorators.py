@@ -9,7 +9,7 @@ def has_role(roles):
     @wraps(f)
     def wrapped(*args, **kwargs):
       if current_user.role not in roles:
-        return redirect(url_for('users.unauthorized', role=current_user.role, roles=roles))
+        return redirect(url_for('users.unauthorized'))
       return f(*args, **kwargs)
     return wrapped
   return wrapper
