@@ -50,7 +50,7 @@ def login():
         return redirect(url_for('users.login'))
        
       # istantiate user
-      user = User(*user)
+      user = User(**user)
 
       # if password is invalid
       if not user.check_pass(form_data["password"]):

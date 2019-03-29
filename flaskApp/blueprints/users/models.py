@@ -10,19 +10,19 @@ class User():
   def __repr__(self):
     return "user model: {}".format(self.id)
 
-  def __init__(self, *args):
+  def __init__(self, **kwargs):
       
     # add props
-    self.id = args[0]
-    self.email = args[1]
-    self.username = args[2]
-    self.password = args[3]
-    self.first_name = args[4]
-    self.last_name = args[5]
-    self.title = args[6]
-    self.job = args[7]
-    self.role = args[8]
-    self.is_active = args[9]
+    self.id = kwargs.get("id")
+    self.email = kwargs.get("emal")
+    self.username = kwargs.get("username")
+    self.password = kwargs.get("password")
+    self.first_name = kwargs.get("first_name")
+    self.last_name = kwargs.get("last_name")
+    self.title = kwargs.get("title")
+    self.job = kwargs.get("job")
+    self.role = kwargs.get("role", "guest")
+    self.is_active = kwargs.get("is_active")
     self.is_anonymous = False
     self.is_authenticated = True
         
@@ -46,6 +46,6 @@ class User():
   def load_user(id):
     user = query_db("SELECT * FROM users WHERE id = ?", [id], one=True)
     if user:
-        return User(*user)
+        return User(**user)
     else:
         return None
