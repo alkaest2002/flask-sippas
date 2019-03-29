@@ -6,6 +6,8 @@
   <div class="uk-grid">
     <div class="uk-width-1-1">
       <h2 class="uk-heading-divider">Cerca titoli</h2>
+      <img src="{{ url_for('static', filename='img/algolia.png') }}" style="height:25px">
+      <p>La routine di ricerca è offerta da <a href="https://www.algolia.com" target="_blank">Algolia</a>.<br>Scegli una o più parole che pensi potrebbero essere contenute nel titolo dell'articolo che stai cercando.</p>
       <form method="post" class="uk-grid uk-grid-small">
           <div class="uk-width-1-3">
             {{ render_field(form.title) }}
@@ -19,8 +21,8 @@
         <div class="uk-margin-medium-top">
           {% if posts %}
             <ul>
-              {% for r in posts %}
-                <li>{{ r.rank }}, {{ r.rowid }}, {{ r.title }}</li>
+              {% for p in posts %}
+                <li><a href="{{ url_for('blog.view_post', id=p.objectID ) }}" target="_blank">{{ p.title }}</a></li>
               {% endfor %}
             </ul>
           {% else %}

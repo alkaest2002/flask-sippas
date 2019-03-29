@@ -7,31 +7,32 @@
       <div class="uk-width-3-4@s">
         <h2 class="uk-heading-divider">Elenco degli articoli</h2>
         {% if posts %}
-          <div class="uk-margin">
-            {% include pagination %}
-          </div> 
-          {% include 'blog/posts_list.html' %}
+        <div class="uk-margin">
+          {% include pagination %}
+        </div>
+        {% include 'blog/posts_list.html' %}
         {% else %}
-          <div class="uk-margin">
-            Nessun articolo trovato.
-          </div>
+        <div class="uk-margin">
+          Nessun articolo trovato.
+        </div>
         {% endif %}
       </div>
       <div class="uk-width-expand">
         <div>
           <h2 class="uk-heading-divider">Etichette</h2>
           {% include 'blog/tags_list.html' %}
-        </div>
-        <div class="uk-margin">
-          <a href="{{ url_for('blog.posts_search') }}">Cerca articolo &rarr;</a>
+          <h2 class="uk-heading-divider uk-margin-medium-top">Avanzate</h2>
+          <div class="uk-margin">
+            <a href="{{ url_for('blog.posts_search') }}">Cerca articolo &rarr;</a>
+          </div>
         </div>
       </div>
-    </div> 
+    </div>
     {% if posts %}
-      <div class="uk-margin">
-        {% include pagination %}
-      </div> 
-    {% endif %}  
+    <div class="uk-margin">
+      {% include pagination %}
+    </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

@@ -6,6 +6,7 @@ from flaskApp import app
 from flask import render_template, abort, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 from flaskApp.db.sqlite import get_db, query_db
+from flaskApp.db.algolia import index
 from flask_login import login_required, current_user
 from flaskApp.extensions.cache_ext import cache
 from flaskApp.utils.decorators import has_role
@@ -32,7 +33,7 @@ def posts():
   
   # fetch posts
   posts = query_db('SELECT * FROM posts ORDER BY id DESC LIMIT {}'.format(BLOG_PAGE_SIZE))
-
+  
   # render view
   return render_template(
     "blog/posts.html", 
@@ -160,7 +161,8 @@ def posts_search():
   if form.validate_on_submit():
 
     # cache data
-    form_data = form.data
+    posts = index.search(form.title.data)["hits"]
+    results = True
 
   # render view
   return render_template("blog/posts_search.html", form=form, posts=posts, results=results)
@@ -287,6 +289,15 @@ def create_post():
       [ title, body, teaser_filename, tags, is_sticky, author, date, date, date ])
     get_db().commit()
 
+    # algolia
+    indexed_data = [{ 
+      "objectID": cur.lastrowid, 
+      "title": title, 
+      "created_at": date,
+      "updated_at": date
+    }]
+    index.add_objects(indexed_data)
+
     # upload teaser image
     if teaser_filename:
       path = os.path.join(app.root_path, 'static', 'blog', str(now.year), str(now.month), str(cur.lastrowid))
@@ -312,15 +323,13 @@ def edit_post(id):
 
   # no post no party
   if post == None: return abort(404) 
-
-  # prepare data to populate form with
+  
+  # init form
   data = {}
   data["title"] = post["title"]
   data["tags"] = post["tags"].split(" ")
   data["is_sticky"] = post["is_sticky"]
-  
-  # init form
-  form = PostUpdateForm( data = data )
+  form = PostUpdateForm(data=data)
   
   # on validate
   if form.validate_on_submit():
@@ -345,17 +354,24 @@ def edit_post(id):
     # -----------------------------------------------------------------
     # update post in sqlite
     # -----------------------------------------------------------------
+    
+    # date 
+    date = time.strftime('%Y-%m-%d %H:%M:%S')
 
     # prepare data
     props = []
-    props.append(("updated_at", time.strftime('%Y-%m-%d %H:%M:%S')))
+    props.append(("updated_at", date))
     props.append(("title", form_data["title"]))
     props.append(("teaser", teaser_filename))
     props.append(("tags", " ".join(form_data["tags"])))
     props.append(("is_sticky", form_data["is_sticky"]))
-    if form_data["md"] != None:
-      props.append(("body", form_data["md"].read().decode("utf-8")))
-  
+    if form_data["md"]:
+      body = form_data["md"].read().decode("utf-8")
+      props.append(("body", body))
+    else:
+      body = post["body"]
+      props.append(("body", body))
+
     # build field update
     update_fields = ", ".join([ "{}=?".format(field_label) for field_label, value in props if value != None ])
     params = [ value for _, value in props if value != None  ] + [id]
@@ -364,6 +380,15 @@ def edit_post(id):
     cur = get_db().cursor()
     cur.execute("UPDATE posts SET {} WHERE id=?".format(update_fields), params)
     get_db().commit()
+
+    # algolia
+    indexed_data = [{ 
+      "objectID": id, 
+      "title": form_data["title"], 
+      "created_at": post["created_at"],
+      "updated_at": date
+    }]
+    index.save_objects(indexed_data)
 
     # flash
     flash("L'articolo è stato creato correttamente", "primary")
@@ -383,6 +408,9 @@ def delete_post(id):
   cur = get_db().cursor()
   cur.execute("DELETE FROM posts WHERE id=?", [id])
   get_db().commit()
+
+  # algolia
+  index.delete_objects([id])
 
   # flash
   flash("L'articolo è stato cancellato correttamente", "primary")
