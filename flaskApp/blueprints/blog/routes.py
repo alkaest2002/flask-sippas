@@ -295,6 +295,7 @@ def create_post():
     indexed_data = [{ 
       "objectID": cur.lastrowid, 
       "title": title, 
+      "body": body[0:1000],
       "created_at": date,
       "updated_at": date
     }]
@@ -387,6 +388,7 @@ def edit_post(id):
     indexed_data = [{ 
       "objectID": id, 
       "title": form_data["title"], 
+      "body": body[0:1000],
       "created_at": post["created_at"],
       "updated_at": date
     }]

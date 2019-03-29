@@ -7,4 +7,4 @@ client = algoliasearch.Client("LQMK4ZKUA1", '8bce8f14cb3cfe58b16fcc7e1f3da662')
 index = client.init_index('prod_sippas')
 
 # customize index
-index.set_settings({"searchableAttributes": ["title"]})
+index.set_settings({"searchableAttributes": [ "title", "body" ]})
