@@ -153,15 +153,17 @@ def posts_search():
   # init form
   form = PostsSearchForm()
 
-  # init posts
+  # init vars
   posts = []
   results = False
 
   # on validate
   if form.validate_on_submit():
 
-    # cache data
-    posts = index.search(form.title.data)["hits"]
+    # retrieve data from algolia
+    posts = index.search(form.title.data, { "hitsPerPage" : 100 })["hits"]
+
+    # set results flag
     results = True
 
   # render view
