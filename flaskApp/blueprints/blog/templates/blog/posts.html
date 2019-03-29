@@ -22,6 +22,9 @@
           <h2 class="uk-heading-divider">Etichette</h2>
           {% include 'blog/tags_list.html' %}
         </div>
+        <div class="uk-margin">
+          <a href="{{ url_for('blog.posts_search') }}">Cerca articolo &rarr;</a>
+        </div>
       </div>
     </div> 
     {% if posts %}
