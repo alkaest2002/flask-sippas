@@ -144,6 +144,29 @@ def posts_tagged_prev(tag, id):
   )
 
 # -----------------------------------------------------------------
+# SEARCH PAGE
+# -----------------------------------------------------------------
+@bp_blog.route("/search", methods=('get', 'post'))
+def posts_search():
+
+  # init form
+  form = PostsSearchForm()
+
+  # init posts
+  posts = []
+  results = False
+
+  # on validate
+  if form.validate_on_submit():
+
+    # cache data
+    form_data = form.data
+
+  # render view
+  return render_template("blog/posts_search.html", form=form, posts=posts, results=results)
+
+
+# -----------------------------------------------------------------
 # VIEW SINGLE POST
 # -----------------------------------------------------------------
 
@@ -357,7 +380,8 @@ def edit_post(id):
 def delete_post(id):
   
   # delete post
-  get_db().execute("DELETE FROM posts WHERE id = ?", [id])
+  cur = get_db().cursor()
+  cur.execute("DELETE FROM posts WHERE id=?", [id])
   get_db().commit()
 
   # flash

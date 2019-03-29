@@ -14,6 +14,17 @@ TAGS_CHOICES = list(map(lambda x: (x,x), Tags().getList()))
 # FORMS
 # ################################################################################
 
+class PostsSearchForm(FlaskForm):
+
+  # title
+  title = StringField(
+    label = 'Titolo', 
+    validators = [ 
+      DataRequired(message="Il titolo è obbligatorio."),
+      Length(max=150, message="Il titolo è troppo lungo (max 150 caratteri).")
+    ]
+  )
+
 class PostCreateForm(FlaskForm):
   
   # title
