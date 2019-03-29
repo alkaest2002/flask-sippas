@@ -8,9 +8,9 @@
     <p>Area riservata del sito. Accedi usando la tue credenziali.</p>
     <form method="post" novalidate>
       {% for field in form  %}
-      <div class="uk-margin uk-width-large">
-        {{ render_field(field) }}
-      </div>
+        <div class="uk-margin uk-width-large">
+          {{ render_field(field) }}
+        </div>
       {% endfor %}
       <div class="uk-margin uk-width-large">
         <button class="uk-button uk-button-primary" type="submit">Login</button>
