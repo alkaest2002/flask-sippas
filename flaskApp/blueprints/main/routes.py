@@ -22,14 +22,14 @@ def index():
   return render_template("main/index.html", latests=latest, stickies=stickies)
 
 @bp_main.route("/services")
-@cache.cached(timeout=60*60*24)
+@cache.cached(timeout=60*60*24*30)
 def services():
   
   # render view
   return render_template("main/services.html")
 
 @bp_main.route("/gild")
-@cache.cached(timeout=60*60*24)
+@cache.cached(timeout=60*60*24*30)
 def gild():
   
   # render view
