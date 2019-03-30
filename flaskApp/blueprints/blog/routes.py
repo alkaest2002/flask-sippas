@@ -196,16 +196,23 @@ def view_post(id):
 # LIST POSTS + STICKIES
 # -----------------------------------------------------------------
 
-@bp_blog.route("/dashboard")
+@bp_blog.route("/dashboard", methods=['get','post'])
 @login_required
 @has_role(["author", "editor", "admin"])
 def dashboard():
+
+  # init form
+  form = PostQuickEdit()
+
+  # on validate, redirect
+  if form.validate_on_submit():
+    return redirect(url_for('blog.edit_post', id=form.id.data))
   
   # fetch posts
   posts = query_db("SELECT * FROM posts ORDER BY id DESC LIMIT {}".format(DASHBOARD_PAGE_SIZE))
   
   # render view
-  return render_template("blog/dashboard.html", posts=posts)
+  return render_template("blog/dashboard.html", posts=posts, form=form)
 
 @bp_blog.route("/dashboard/sticky")
 @login_required

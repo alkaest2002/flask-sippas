@@ -1,7 +1,7 @@
 import re
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectMultipleField, BooleanField, ValidationError
+from wtforms import StringField, SelectMultipleField, BooleanField, ValidationError, IntegerField
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms.validators import Regexp, Optional, Length, DataRequired
@@ -104,5 +104,11 @@ class PostUpdateForm(PostCreateForm):
   def validate_is_sticky(form, field):
     pass
 
+class PostQuickEdit(FlaskForm):
+
+  # post id
+  id = IntegerField(
+    label = "Id dell'articolo"
+  )
 
   

@@ -1,23 +1,10 @@
 {% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
 
 {% block content %}
 <div class="uk-section">
   <div class="uk-grid uk-margin-large-bottom">
-    <div class="uk-width-expand">
-      <div class=" uk-margin-bottom">
-        <h2 class="uk-heading-divider">Filtra</h2>
-        <a href="{{ url_for('blog.dashboard') }}">Tutti gli articoli</a><br>
-        <a href="{{ url_for('blog.dashboard_sticky') }}">Solo articoli in evidenza</a><br>
-      </div>
-      <div class=" uk-margin-bottom">
-        <h2 class="uk-heading-divider">Azioni</h2>
-        <a href="{{ url_for('blog.create_post') }}">Crea nuovo articolo</a><br>
-        <a href="{{ url_for('blog.reset_stickies') }}">Annulla articoli in evidenza</a><br>
-        <a href="{{ url_for('blog.blog_preview') }}">Anteprima del blog</a><br><br>
-        <a href="{{ url_for('users.logout') }}">Logout</a>
-      </div>
-    </div>
-    <div class="uk-width-4-5@s">
+    <div class="uk-width-4-5@m">
       <h2 class="uk-heading-divider">Elenco articoli</h2>
       <div>
         <ul class="uk-pagination">
@@ -33,7 +20,7 @@
           </li>
         </ul>
       </div>
-      
+
       <table class="uk-table uk-table-small uk-table-striped">
         <thead>
           <tr>
@@ -93,6 +80,33 @@
         </ul>
       </div>
     </div>
+    <div class="uk-width-expand">
+        <div class=" uk-margin-medium-bottom">
+          <h2 class="uk-heading-divider">Filtra</h2>
+          <a href="{{ url_for('blog.dashboard') }}">Tutti gli articoli</a><br>
+          <a href="{{ url_for('blog.dashboard_sticky') }}">Solo articoli in evidenza</a><br>
+        </div>
+        <div class=" uk-margin-medium-bottom">
+          <h2 class="uk-heading-divider">Azioni</h2>
+          <a href="{{ url_for('blog.create_post') }}">Crea nuovo articolo</a><br>
+          <a href="{{ url_for('blog.reset_stickies') }}">Annulla articoli in evidenza</a><br>
+          <a href="{{ url_for('blog.blog_preview') }}">Anteprima del blog</a><br><br>
+          <a href="{{ url_for('users.logout') }}">Logout</a>
+        </div>
+        <div class=" uk-margin-medium-bottom">
+          <h2 class="uk-heading-divider">Modifica lampo</h2>
+          <p class="uk-text-small">Inserisci l'id dell'articolo che vuoi modificare</p>
+          <form method="post" class="uk-grid uk-grid-small uk-grid-collapse">
+            <div class="uk-width-3-5">
+              {{ form.id(class="uk-input") }}
+              {{ form.csrf_token }}
+            </div>
+            <div class="uk-width-1-5">
+              <button class="uk-button uk-button-primary" type="submit">ok</button>
+            </div>
+          </form>
+        </div>
+      </div>
   </div>
 </div>
 {% endblock %}
