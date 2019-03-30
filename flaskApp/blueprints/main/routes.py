@@ -5,6 +5,7 @@ from flaskApp.db.sqlite import query_db
 from flaskApp.extensions.cache_ext import cache
 
 from . import bp_main
+from .models import Members
 
 # ################################################################################
 # ROUTES 
@@ -33,4 +34,4 @@ def services():
 def gild():
   
   # render view
-  return render_template("main/gild.html")
+  return render_template("main/gild.html", members=Members().get_list())

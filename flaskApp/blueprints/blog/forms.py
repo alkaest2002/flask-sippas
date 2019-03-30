@@ -8,7 +8,7 @@ from wtforms.validators import Regexp, Optional, Length, DataRequired
 
 from .models import Tags
 
-TAGS_CHOICES = list(map(lambda x: (x,x), Tags().getList()))
+TAGS_CHOICES = list(map(lambda x: (x,x), Tags().get_list()))
 
 # ################################################################################
 # FORMS
@@ -74,7 +74,7 @@ class PostCreateForm(FlaskForm):
 
   def validate_tags(form, field):
     if not field.data: return
-    accepted_tags = Tags().getList()
+    accepted_tags = Tags().get_list()
     if not all(elem in accepted_tags for elem in field.data):
       raise ValidationError('Etichette non riconosciute.')
     if len(field.data) > 3:

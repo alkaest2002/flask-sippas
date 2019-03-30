@@ -4,19 +4,20 @@
 <div class="uk-section">
   <div class="uk-grid uk-margin-large-bottom">
     <div class="uk-width-expand">
-      <h2 class="uk-heading-divider">Filtra</h2>
-      <p>
+      <div class=" uk-margin-bottom">
+        <h2 class="uk-heading-divider">Filtra</h2>
         <a href="{{ url_for('blog.dashboard') }}">Tutti gli articoli</a><br>
         <a href="{{ url_for('blog.dashboard_sticky') }}">Solo articoli in evidenza</a><br>
-      </p>
-      <h2 class="uk-heading-divider">Azioni</h2>
-      <p>
+      </div>
+      <div class=" uk-margin-bottom">
+        <h2 class="uk-heading-divider">Azioni</h2>
         <a href="{{ url_for('blog.create_post') }}">Crea nuovo articolo</a><br>
-        <a href="{{ url_for('blog.reset_stickies') }}">Annulla articoli in evidenza</a><br><br>
+        <a href="{{ url_for('blog.reset_stickies') }}">Annulla articoli in evidenza</a><br>
+        <a href="{{ url_for('blog.blog_preview') }}">Anteprima del blog</a><br><br>
         <a href="{{ url_for('users.logout') }}">Logout</a>
-      </p>
+      </div>
     </div>
-    <div class="uk-width-4-5">
+    <div class="uk-width-4-5@s">
       <h2 class="uk-heading-divider">Elenco articoli</h2>
       <div>
         <ul class="uk-pagination">
@@ -32,28 +33,30 @@
           </li>
         </ul>
       </div>
+      
       <table class="uk-table uk-table-small uk-table-striped">
         <thead>
           <tr>
-            <th style="width:7%"></th>
-            <th style="width:5%">Id</th>
-            <th style="width:3%">Evid.</th>
-            <th style="width:40%">Titolo</th>
-            <th style="width:40%">Etichette</th>
+            <th style="width:10%">LINK</th>
+            <th class="uk-visible@s uk-text-center" style="width:3%">Id</th>
+            <th class="uk-visible@s uk-text-center" style="width:3%">Evid.</th>
+            <th style="width:43%">Titolo</th>
+            <th class="uk-visible@m" style="width:42%">Etichette</th>
           </tr>
         </thead>
         <tbody>
           {% for p in posts %}
           <tr>
             <td>
-              <a  href="{{ url_for('blog.view_post', id=p.id) }}"><span uk-icon="file-text"></span></a><a href="{{ url_for('blog.edit_post', id=p.id) }}"><span uk-icon="file-edit"></span></a>
+              <a href="{{ url_for('blog.view_post', id=p.id) }}"><span uk-icon="file-text"></span></a><a
+                href="{{ url_for('blog.edit_post', id=p.id) }}"><span uk-icon="file-edit"></span></a>
             </td>
-            <td>
+            <td class="uk-text-center uk-visible@s">
               {{ p.id }}
             </td>
-            <td class="uk-text-center">
+            <td class="uk-text-center uk-visible@s">
               {% if p.is_sticky %}
-                <span class="uk-margin-small-right" uk-icon="check"></span>
+              <span class="uk-margin-small-right" uk-icon="check"></span>
               {% else %}
               <span>-</span>
               {% endif %}
@@ -61,7 +64,7 @@
             <td class="uk-text-truncate">
               {{ p.title | capitalize }}
             </td>
-            <td>
+            <td class="uk-text-truncate uk-visible@m">
               {{ p.tags }}
             </td>
           </tr>
@@ -74,7 +77,8 @@
           {% endfor %}
         </tbody>
       </table>
-      <div>
+
+      <div class="uk-margin-top">
         <ul class="uk-pagination">
           <li>
             <a href="{{ url_for('blog.dashboard_prev', id=posts[0].id) }}" class="pagination-previous">

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="uk-section">
+  <div class="uk-container">
+    <div class="uk-grid">
+      <div class="uk-width-3-4@s">
+        <h2 class="uk-heading-divider">Elenco degli articoli</h2>
+        {% if posts %}
+        {% include 'blog/posts_list.html' %}
+        {% else %}
+        <div class="uk-margin">
+          Nessun articolo trovato.
+        </div>
+        {% endif %}
+      </div>
+      <div class="uk-width-expand">
+        <div>
+          <h2 class="uk-heading-divider">Etichette</h2>
+          <p>Nell'anteprima, la lista delle etichette è nascosta</p>
+          <h2 class="uk-heading-divider uk-margin-medium-top">Avanzate</h2>
+          <div class="uk-margin">
+            <p>Nell'anteprima, il link per la pagina di ricerca è nascosto</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

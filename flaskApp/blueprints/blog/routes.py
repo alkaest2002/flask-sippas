@@ -15,7 +15,7 @@ from . import bp_blog
 from .models import Tags 
 from .forms import *
 
-TAGS = Tags().getList()
+TAGS = Tags().get_list()
 BLOG_PAGE_SIZE = 9
 DASHBOARD_PAGE_SIZE = 25
 
@@ -253,6 +253,26 @@ def dashboard_prev(id):
 # CREATE/UPDATE/DELETE POSTS + RESET STICKIES
 # -----------------------------------------------------------------
 
+@bp_blog.route("/dashboard/frontpage/preview")
+@login_required
+@has_role(["author", "editor", "admin"])
+def blog_preview():
+
+  # fetch posts
+  posts = query_db('SELECT * FROM posts ORDER BY id DESC LIMIT {}'.format(BLOG_PAGE_SIZE))
+  
+  # render view
+  return render_template(
+    "blog/posts_preview.html", 
+    posts=posts, 
+    tags=TAGS, 
+    pagination="blog/posts_pagination.html"
+  )
+
+# -----------------------------------------------------------------
+# CREATE/UPDATE/DELETE POSTS + RESET STICKIES
+# -----------------------------------------------------------------
+
 @bp_blog.route("/create", methods=['GET', 'POST'])
 @login_required
 @has_role(["author", "editor", "admin"])
@@ -313,7 +333,7 @@ def create_post():
     return redirect(url_for('blog.dashboard'))
 
   # render view
-  return render_template("blog/post_create_update.html",  form = form, tags = Tags().getList())
+  return render_template("blog/post_create_update.html",  form = form, tags = Tags().get_list())
 
 @bp_blog.route("/edit/<int:id>", methods=['get','post'])
 @login_required
@@ -400,7 +420,7 @@ def edit_post(id):
     return redirect(url_for('blog.dashboard'))
 
   # render view
-  return render_template("blog/post_create_update.html",  form = form, post = post, tags = Tags().getList())
+  return render_template("blog/post_create_update.html",  form = form, post = post, tags = Tags().get_list())
 
 @bp_blog.route("/delete/<int:id>", methods=['post'])
 @login_required

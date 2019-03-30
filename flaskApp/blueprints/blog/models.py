@@ -31,5 +31,5 @@ class Tags():
     # add props
     self.tags = TAGS
         
-  def getList(self):
+  def get_list(self):
     return self.tags 
