@@ -78,6 +78,10 @@ thead tr th {
   color: #1e87f0;
 }
 
+.uk-subnav>*>:first-child {
+  color: #1e87f0;
+}
+
 #featurettes .uk-background-cover, #stickies img {
   -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0);
   box-shadow: 0 1px 3px rgba(0,0,0,.12);

@@ -7,16 +7,18 @@
         <img src="{{ url_for('static', filename='blog/' + p.teaser | replace('#', p.id | string)) }}" />
       </div>
       {% endif %}
-      <div class="uk-card-body">
+      <div class="uk-card-body uk-padding-small-top">
         <h2 class="uk-margin-remove">{{ p.id }}</h2>
-        <p class="uk-margin-small">{{ p.title }}</p>
-        <div class="uk-margin-bottom">
+        <div class="uk-margin-small">
+          <p class="uk-margin-remove">
+            {% for tag in p.tags.split(' ') %} <a class="uk-text-small"
+              href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a> {% endfor %}
+          </p>
+          <p class="uk-margin-remove">{{ p.title }}</p>
+        </div>
+        <div class="uk-margin">
           <a href="{{ url_for('blog.view_post', id=p.id) }}">leggi &rarr;</a>
         </div>
-        <p class="uk-position-small uk-position-bottom" style="bottom: 10px">
-          {% for tag in p.tags.split(' ') %} <a class="uk-text-small uk-text-muted"
-            href="{{ url_for('blog.posts_tagged', tag=tag) }}">{{ tag }}</a> {% endfor %}
-        </p>
       </div>
     </div>
   </div>
