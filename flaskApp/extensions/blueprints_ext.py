@@ -22,5 +22,6 @@ def attach_blueprints(app):
   @app.errorhandler(403)
   @app.errorhandler(404)
   @app.errorhandler(500)
+  @app.errorhandler(413)
   def page_error(error):
-    return render_template('error.html', code = error.code), error.code
+    return render_template('error.html', error=error)

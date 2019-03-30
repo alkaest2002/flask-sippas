@@ -8,8 +8,10 @@
   <div class="uk-container uk-flex uk-flex-center uk-text-center uk-flex-middle uk-height-1-1">
     <div style="position:relative;top:-50px">
       <h2 class="uk-margin-remove-bottom">Accidenti!</h2>
-      <h1 class="uk-heading-primary"><b>Errore {{ code }}</b></h1>
-      <span>Si è verificato un errore.</span><br>
+      <h1 class="uk-heading-primary"><b>Errore {{ error.code }}</b></h1>
+      <div class="uk-width-xlarge uk-text-break uk-margin-bottom">
+        <span> {{ error.description }}</span>
+      </div>
       <a href="{{ url_for('main.index') }}">Torna alla Homepage</a>
     </div>
   </div>
