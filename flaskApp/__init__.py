@@ -1,9 +1,17 @@
 
 from flask import Flask
+from dotenv import load_dotenv
+
+# load .env variables
+env_path = './.env'
+load_dotenv(dotenv_path=env_path)
 
 # init app
 app = Flask(__name__)
 
+# config app
+app.config.from_object("config.devConfig")
+ 
 # import extensions
 from flaskApp.extensions.cache_ext import attach_cache
 from flaskApp.extensions.login_ext import attach_login_manager
@@ -12,11 +20,8 @@ from flaskApp.extensions.blueprints_ext import attach_blueprints
 from flaskApp.extensions.db_ext import attach_db
 
 # app factory function
-def create_app(cfg = None):
-        
-  # config app
-  if cfg is not None: app.config.from_object(cfg)
-  
+def create_app():
+         
   # attach cache manager
   attach_cache(app)
 
