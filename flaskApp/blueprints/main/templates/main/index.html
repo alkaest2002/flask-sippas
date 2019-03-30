@@ -158,11 +158,11 @@
 
 {% block scripts %}
 <script>
-  if (document.cookie != "cookie_consent=true") {
+  if (document.cookie != "sippas_cookie_consent=true" && false) {
     const msg = "Questo sito si avvale di <b>cookie tecnici</b> per fornire all'utente finale la migliore esperienza d'uso. Proseguendo la navigazione all'interno del sito, acconsenti all’uso dei cookie.<br><br><b>Clicca qui</b> per chiudere questa finestra"
     UIkit.notification(msg, { pos: 'top-right', timeout: 6000 });
     UIkit.util.on(".uk-notification", 'close', function () {
-      document.cookie = "cookie_consent=true";
+      document.cookie = "sippas_cookie_consent=true";
     });
   }
 </script>
