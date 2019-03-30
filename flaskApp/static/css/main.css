@@ -34,8 +34,9 @@ thead tr th {
 
 .uk-card-default {
   color: rgba(3,27,78,0.7) !important;
-  box-shadow: none;
-  border: 1px solid #ddd;
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.12);
+  box-shadow: 0 1px 3px rgba(0,0,0,.12);
+  border: 0;
 }
 
 .uk-card-secondary {
@@ -75,4 +76,9 @@ thead tr th {
 
 .uk-pagination>*>* {
   color: #1e87f0;
+}
+
+#featurettes .uk-background-cover, #stickies img {
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0);
+  box-shadow: 0 1px 3px rgba(0,0,0,.12);
 }
