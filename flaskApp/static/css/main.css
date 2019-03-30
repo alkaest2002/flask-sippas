@@ -72,3 +72,7 @@ thead tr th {
   cursor: pointer;
   font-size: .8em;
 }
+
+.uk-pagination>*>* {
+  color: #1e87f0;
+}
