@@ -22,6 +22,17 @@ def unauthorized():
   return render_template('users/unauthorized.html')
 
 # -----------------------------------------------------------------
+# SWITCHER
+# -----------------------------------------------------------------
+@bp_users.route("/switcher")
+@login_required
+def switcher():
+
+  # redirect to blog dashbord 
+  if current_user.role in ["author", "editor", "admin"]:
+    return redirect(url_for('blog.dashboard'))
+
+# -----------------------------------------------------------------
 # LOGIN
 # -----------------------------------------------------------------
 @bp_users.route("/login", methods=("get", "post"))
