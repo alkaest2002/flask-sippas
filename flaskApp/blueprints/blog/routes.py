@@ -169,7 +169,6 @@ def posts_search():
   # render view
   return render_template("blog/posts_search.html", form=form, posts=posts, results=results)
 
-
 # -----------------------------------------------------------------
 # VIEW SINGLE POST
 # -----------------------------------------------------------------
