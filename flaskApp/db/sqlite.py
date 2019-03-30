@@ -1,5 +1,4 @@
 import sqlite3
-import click
 import os.path
 from contextlib import closing
 
@@ -16,7 +15,6 @@ def dict_factory(cursor, row):
     d[col[0]] = row[idx]
   return d
 
-
 def get_db():
 
   # attach db to global
@@ -32,14 +30,12 @@ def get_db():
   # return db
   return g.db
 
-
 def query_db(query, args=(), one=False):
 
   # query and close cursor
   with closing(get_db().cursor().execute(query, args)) as cur:
     rv = cur.fetchall()
     return (rv[0] if rv else None) if one else rv
-
 
 def close_db(e=None):
 
