@@ -185,7 +185,7 @@ def view_post(id):
   if post == None: abort(404) 
 
   # render view
-  return render_template("blog/post_view.html",  post=post, latests=latests, show_edit=current_user.is_active)
+  return render_template("blog/post_view.html",  post=post, latests=latests)
 
 
 # ################################################################################

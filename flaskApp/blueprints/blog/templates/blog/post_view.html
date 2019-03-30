@@ -15,9 +15,6 @@
           <div>
             {{ post.body | md_to_html | safe }}
           </div>
-          {% if show_edit %}
-          <a href="{{ url_for('blog.edit_post', id=post.id) }}">Modifica l'articolo</a>
-          {% endif %}
         </article>
       </div>
       {% if latests %}
