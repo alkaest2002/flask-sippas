@@ -11,13 +11,14 @@ from flask_login import login_required, current_user
 from flaskApp.extensions.cache_ext import cache
 from flaskApp.utils.decorators import has_role
 
+BLOG_PAGE_SIZE = 9
+DASHBOARD_PAGE_SIZE = 25
+
 from . import bp_blog
 from .models import Tags 
 from .forms import *
 
 TAGS = Tags().get_list()
-BLOG_PAGE_SIZE = 9
-DASHBOARD_PAGE_SIZE = 25
 
 # ################################################################################
 # ROUTES FOR ALL

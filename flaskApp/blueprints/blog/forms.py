@@ -6,7 +6,9 @@ from wtforms.widgets import ListWidget, CheckboxInput
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms.validators import Regexp, Optional, Length, DataRequired
 
+from flaskApp.db.sqlite import query_db
 from .models import Tags
+from .routes import DASHBOARD_PAGE_SIZE
 
 TAGS_CHOICES = list(map(lambda x: (x,x), Tags().get_list()))
 
@@ -70,7 +72,10 @@ class PostCreateForm(FlaskForm):
   def validate_is_sticky(form, field):
     if not field.data: return
     if not form.teaser.data:
-      raise ValidationError('Gli articoli in evidenza devono avere un"immagine')
+      raise ValidationError('Gli articoli in evidenza devono avere un"immagine.')
+    if query_db('SELECT count(*) as count FROM posts WHERE is_sticky = 1', one=True)["count"] == DASHBOARD_PAGE_SIZE:
+      raise ValidationError('Hai già selezionato il numero massimo di articoli in evidenza.')
+    raise ValidationError("sicurezza")
 
   def validate_tags(form, field):
     if not field.data: return
