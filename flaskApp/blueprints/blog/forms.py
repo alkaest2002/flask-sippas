@@ -82,13 +82,13 @@ class PostCreateForm(FlaskForm):
 
   def validate_teaser(form, field):
     if not field.data: return
-    pattern = re.compile(r"[^\\#]*\.(jpg|jpeg|gif|png)$")
+    pattern = re.compile(r"[^\\#]*\.(jpg|jpeg|JPG|JPEG|gif|GIF|png|PNG)$")
     if not pattern.match(field.data.filename):
       raise ValidationError('Tipo di immagine non compatibile.')
 
   def validate_md(form, field):
     if not field.data: return
-    pattern = re.compile(r"[^\\]*\.(md|txt)$")
+    pattern = re.compile(r"[^\\]*\.(md|MD|txt|TXT)$")
     if not pattern.match(field.data.filename):
       raise ValidationError('Tipo di file markdown non compatibile.')
 
