@@ -8,7 +8,7 @@ from flaskApp.db.sqlite import query_db
 class User():
 
   def __repr__(self):
-    return "user model: {}".format(self.id)
+    return f"user model: {self.id}"
 
   def __init__(self, **kwargs):
       
@@ -40,7 +40,7 @@ class User():
 
   def get_author(self):
     # return author name
-    return "{} {} {}, {}".format(self.title, self.first_name, self.last_name, self.job)
+    return f"{self.title} {self.first_name} { self.last_name}, { self.job}"
 
   @login_manager.user_loader
   def load_user(id):

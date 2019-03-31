@@ -33,7 +33,7 @@ TAGS = Tags().get_list()
 def posts():
   
   # fetch posts
-  posts = query_db('SELECT * FROM posts ORDER BY id DESC LIMIT {}'.format(BLOG_PAGE_SIZE))
+  posts = query_db("SELECT * FROM posts ORDER BY id DESC LIMIT ?", [ BLOG_PAGE_SIZE ])
   
   # render view
   return render_template(
@@ -48,7 +48,7 @@ def posts():
 def posts_next(id):
   
   # fetch posts
-  posts = query_db('SELECT * FROM posts WHERE id < ? ORDER BY id DESC LIMIT {}'.format(BLOG_PAGE_SIZE), [id])
+  posts = query_db("SELECT * FROM posts WHERE id < ? ORDER BY id DESC LIMIT ?", [ id, BLOG_PAGE_SIZE ])
 
   # no post no party
   if posts == []: return redirect(url_for('blog.posts'))
@@ -66,7 +66,7 @@ def posts_next(id):
 def posts_prev(id):
   
   # fetch posts
-  posts = query_db('SELECT * FROM posts WHERE id > ? ORDER BY id ASC LIMIT {}'.format(BLOG_PAGE_SIZE), [id])
+  posts = query_db("SELECT * FROM posts WHERE id > ? ORDER BY id ASC LIMIT ?", [ id, BLOG_PAGE_SIZE ])
   
   # no post no party
   if posts == []: return redirect(url_for('blog.posts'))
@@ -91,7 +91,7 @@ def posts_tagged(tag):
   if tag not in TAGS: return redirect(url_for('blog.posts'))
 
   # fetch posts
-  posts = query_db('SELECT * FROM posts WHERE tags LIKE "%{}%" ORDER BY id DESC LIMIT {}'.format(tag, BLOG_PAGE_SIZE))
+  posts = query_db("SELECT * FROM posts WHERE tags LIKE ? ORDER BY id DESC LIMIT ?", [ f"%{tag}%", BLOG_PAGE_SIZE ])
   
   # render view
   return render_template(
@@ -110,7 +110,7 @@ def posts_tagged_next(tag, id):
   if tag not in TAGS: return redirect(url_for('blog.posts'))
   
   # fetch posts
-  posts = query_db('SELECT * FROM posts WHERE tags LIKE "%{}%" AND id < ? ORDER BY id DESC LIMIT {}'.format(tag, BLOG_PAGE_SIZE), [id])
+  posts = query_db("SELECT * FROM posts WHERE tags LIKE ? AND id < ? ORDER BY id DESC LIMIT ?", [ f"%{tag}%", id, BLOG_PAGE_SIZE ])
 
   # no post no party
   if posts == []: return redirect(url_for('blog.posts_tagged', tag=tag))
@@ -132,10 +132,10 @@ def posts_tagged_prev(tag, id):
   if tag not in TAGS: return redirect(url_for('blog.posts'))
 
   # fetch posts
-  posts = query_db('SELECT * FROM posts WHERE tags LIKE "%{}%" AND id > ? ORDER BY id ASC LIMIT {}'.format(tag, BLOG_PAGE_SIZE), [id])
+  posts = query_db("SELECT * FROM posts WHERE tags LIKE ? AND id > ? ORDER BY id ASC LIMIT ?", [ f"%{tag}%", id, BLOG_PAGE_SIZE ])
 
   # no post no party
-  if posts == []: return redirect(url_for('blog.posts_tagged', tag=tag))
+  if posts == []: return redirect(url_for("blog.posts_tagged", tag=tag))
   
   # render view
   return render_template(
@@ -149,7 +149,7 @@ def posts_tagged_prev(tag, id):
 # -----------------------------------------------------------------
 # SEARCH PAGE
 # -----------------------------------------------------------------
-@bp_blog.route("/search", methods=('get', 'post'))
+@bp_blog.route("/search", methods=["get", "post"])
 def posts_search():
 
   # init form
@@ -180,8 +180,8 @@ def posts_search():
 def view_post(id):
 
   # fetch post
-  post = query_db('SELECT * FROM posts WHERE id = ?', [id], True)
-  latests = query_db('SELECT * FROM posts ORDER BY id DESC LIMIT 5')
+  post = query_db("SELECT * FROM posts WHERE id = ?", [ id ], True)
+  latests = query_db("SELECT * FROM posts ORDER BY id DESC LIMIT 5")
 
   # no post no party
   if post == None: abort(404) 
@@ -198,7 +198,7 @@ def view_post(id):
 # LIST POSTS + STICKIES
 # -----------------------------------------------------------------
 
-@bp_blog.route("/dashboard", methods=['get','post'])
+@bp_blog.route("/dashboard", methods=["get","post"])
 @login_required
 @has_role(["author", "editor", "admin"])
 def dashboard():
@@ -208,10 +208,10 @@ def dashboard():
 
   # on validate, redirect
   if form.validate_on_submit():
-    return redirect(url_for('blog.edit_post', id=form.id.data))
+    return redirect(url_for("blog.edit_post", id=form.id.data))
   
   # fetch posts
-  posts = query_db("SELECT * FROM posts ORDER BY id DESC LIMIT {}".format(DASHBOARD_PAGE_SIZE))
+  posts = query_db("SELECT * FROM posts ORDER BY id DESC LIMIT ?", [ DASHBOARD_PAGE_SIZE ])
   
   # render view
   return render_template("blog/dashboard.html", posts=posts, form=form)
@@ -226,10 +226,10 @@ def dashboard_sticky():
 
   # on validate, redirect
   if form.validate_on_submit():
-    return redirect(url_for('blog.edit_post', id=form.id.data))
+    return redirect(url_for("blog.edit_post", id=form.id.data))
   
   # fetch posts
-  posts = query_db("SELECT * FROM posts WHERE is_sticky = 1 ORDER BY id DESC LIMIT {}".format(DASHBOARD_PAGE_SIZE))
+  posts = query_db("SELECT * FROM posts WHERE is_sticky = 1 ORDER BY id DESC LIMIT ?", [ DASHBOARD_PAGE_SIZE ])
   
   # render view
   return render_template("blog/dashboard.html", posts=posts, form=form, show_pagination=False)
@@ -248,10 +248,10 @@ def dashboard_next(id):
 
   # on validate, redirect
   if form.validate_on_submit():
-    return redirect(url_for('blog.edit_post', id=form.id.data))
+    return redirect(url_for("blog.edit_post", id=form.id.data))
 
   # fetch posts
-  posts = query_db('SELECT * FROM posts WHERE id < ? ORDER BY id DESC LIMIT {}'.format(DASHBOARD_PAGE_SIZE), [id])
+  posts = query_db("SELECT * FROM posts WHERE id < ? ORDER BY id DESC LIMIT ?", [ id, DASHBOARD_PAGE_SIZE ])
 
   # no post no party
   if posts == []: return redirect(url_for('blog.dashboard'))
@@ -269,13 +269,13 @@ def dashboard_prev(id):
 
   # on validate, redirect
   if form.validate_on_submit():
-    return redirect(url_for('blog.edit_post', id=form.id.data))
+    return redirect(url_for("blog.edit_post", id=form.id.data))
 
   # fetch posts
-  posts = query_db('SELECT * FROM posts WHERE id > ? ORDER BY id ASC LIMIT {}'.format(DASHBOARD_PAGE_SIZE), [id])
+  posts = query_db("SELECT * FROM posts WHERE id > ? ORDER BY id ASC LIMIT ?", [ id, DASHBOARD_PAGE_SIZE ])
   
   # no post no party
-  if posts == []: return redirect(url_for('blog.dashboard'))
+  if posts == []: return redirect(url_for("blog.dashboard"))
 
   # render view
   return render_template("blog/dashboard.html", posts=posts[::-1], form=form)
@@ -290,7 +290,7 @@ def dashboard_prev(id):
 def blog_preview():
 
   # fetch posts
-  posts = query_db('SELECT * FROM posts ORDER BY id DESC LIMIT {}'.format(BLOG_PAGE_SIZE))
+  posts = query_db("SELECT * FROM posts ORDER BY id DESC LIMIT ?", [ BLOG_PAGE_SIZE ])
   
   # render view
   return render_template(
@@ -320,7 +320,7 @@ def create_post():
      
     # prepare data
     now = datetime.datetime.now()
-    date = "{}-{}-{} {}:{}:{}".format(now.year, now.month, now.day, now.hour, now.minute, now.second)
+    date = f"{now.year}-{now.month}-{now.day} {now.hour}:{now.minute}:{now.second}"
     title = form_data["title"]
     body = form_data["md"].read().decode("utf-8")
     tags = " ".join(form_data["tags"])
@@ -328,11 +328,7 @@ def create_post():
     author = current_user.get_author()
 
     # prepare name for teaser image
-    try: 
-      teaser_filename = "{}/{}/{}/{}".format(
-        now.year, now.month, "#", 
-        secure_filename(form_data["teaser"].filename)
-      )
+    try: teaser_filename = f"{now.year}/{now.month}/#/{secure_filename(form_data['teaser'].filename)}"
     except: teaser_filename = None
     
     # write data to sqlite
@@ -353,7 +349,7 @@ def create_post():
 
     # upload teaser image
     if teaser_filename:
-      path = os.path.join(app.root_path, 'static', 'blog', str(now.year), str(now.month), str(cur.lastrowid))
+      path = os.path.join(app.root_path, "static", "blog", str(now.year), str(now.month), str(cur.lastrowid))
       if not os.path.exists(path): os.makedirs(path)
       form_data["teaser"].save(os.path.join(path, secure_filename(form_data["teaser"].filename)))
     
@@ -361,18 +357,18 @@ def create_post():
     flash("Articolo creato correttamente.", "primary")
 
     # redirect on success
-    return redirect(url_for('blog.dashboard'))
+    return redirect(url_for("blog.dashboard"))
 
   # render view
   return render_template("blog/post_create_update.html",  form = form, tags = Tags().get_list())
 
-@bp_blog.route("/edit/<int:id>", methods=['get','post'])
+@bp_blog.route("/edit/<int:id>", methods=["get","post"])
 @login_required
 @has_role(["author", "editor", "admin"])
 def edit_post(id):
 
   # fetch post to be edited
-  post = query_db('SELECT * FROM posts WHERE id = ?', [id], True)
+  post = query_db("SELECT * FROM posts WHERE id = ?", [ id ], True)
 
   # no post no party
   if post == None: return abort(404) 
@@ -399,7 +395,7 @@ def edit_post(id):
      # upload teaser image
     if teaser_filename:
       path = os.path.join(
-        app.root_path, 'static', 'blog', 
+        app.root_path, "static", "blog", 
         post["created_at"].split("-")[0], post["created_at"].split("-")[1], str(id))
       if not os.path.exists(path): os.makedirs(path)
       form_data["teaser"].save(os.path.join(path, secure_filename(form_data["teaser"].filename)))
@@ -409,7 +405,7 @@ def edit_post(id):
     # -----------------------------------------------------------------
     
     # date 
-    date = time.strftime('%Y-%m-%d %H:%M:%S')
+    date = time.strftime("%Y-%m-%d %H:%M:%S")
 
     # prepare data
     props = []
@@ -426,12 +422,12 @@ def edit_post(id):
       props.append(("body", body))
 
     # build field update
-    update_fields = ", ".join([ "{}=?".format(field_label) for field_label, value in props if value != None ])
-    params = [ value for _, value in props if value != None  ] + [id]
+    update_fields = ", ".join([ f"{field_label}=?" for field_label, value in props if value != None ])
+    params = [ value for _, value in props if value != None  ] + [ id ]
 
     # write data to sqlite
     cur = get_db().cursor()
-    cur.execute("UPDATE posts SET {} WHERE id=?".format(update_fields), params)
+    cur.execute(f"UPDATE posts SET {update_fields} WHERE id=?", params)
     get_db().commit()
 
     # algolia
@@ -448,7 +444,7 @@ def edit_post(id):
     flash("L'articolo è stato creato correttamente.", "primary")
 
     # redirect on success
-    return redirect(url_for('blog.dashboard'))
+    return redirect(url_for("blog.dashboard"))
 
   # render view
   return render_template("blog/post_create_update.html",  form = form, post = post, tags = Tags().get_list())
@@ -460,17 +456,17 @@ def delete_post(id):
   
   # delete post
   cur = get_db().cursor()
-  cur.execute("DELETE FROM posts WHERE id=?", [id])
+  cur.execute("DELETE FROM posts WHERE id=?", [ id ])
   get_db().commit()
 
   # algolia
-  index.delete_objects([id])
+  index.delete_objects([ id ])
 
   # flash
   flash("L'articolo è stato cancellato correttamente.", "primary")
 
   # redirect
-  return redirect(url_for('blog.dashboard'))
+  return redirect(url_for("blog.dashboard"))
 
 @bp_blog.route("/cache/clear")
 @login_required
@@ -484,7 +480,7 @@ def clear_cache():
   flash("La cache del blog è stata correttamente cancellata.", "primary")
 
   # redirect
-  return redirect(url_for('blog.dashboard'))
+  return redirect(url_for("blog.dashboard"))
 
 # -----------------------------------------------------------------
 # RESET STICKIES
@@ -500,7 +496,7 @@ def reset_stickies():
   get_db().commit()
 
   # flash
-  flash("L'operazione si è conclusa con successo", "primary")
+  flash("L'operazione si è conclusa con successo.", "primary")
 
   # redirect
-  return redirect(url_for('blog.dashboard'))
+  return redirect(url_for("blog.dashboard"))
