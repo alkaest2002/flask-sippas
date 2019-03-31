@@ -6,8 +6,8 @@
   <div class="uk-grid uk-margin-large-bottom">
     <div class="uk-width-4-5@m">
       <h2 class="uk-heading-divider">Elenco articoli</h2>
-      <div>
-        <ul class="uk-pagination">
+      <div class="uk-margin-bottom">
+        <ul class="uk-pagination uk-margin-remove-bottom">
           <li>
             <a href="{{ url_for('blog.dashboard_prev', id=posts[0].id) }}" class="pagination-previous">
               <span class="uk-margin-small-right" uk-pagination-previous></span> Più recenti
@@ -21,7 +21,7 @@
         </ul>
       </div>
 
-      <table class="uk-table uk-table-small uk-table-striped">
+      <table class="uk-table uk-table-small uk-table-striped uk-margin-remove-top">
         <thead>
           <tr>
             <th style="width:10%">LINK</th>
@@ -103,7 +103,8 @@
         <h2 class="uk-heading-divider">Azioni</h2>
         <a href="{{ url_for('blog.create_post') }}">Crea nuovo articolo</a><br>
         <a href="{{ url_for('blog.reset_stickies') }}">Annulla articoli in evidenza</a><br>
-        <a href="{{ url_for('blog.blog_preview') }}">Anteprima del blog</a><br><br>
+        <a href="{{ url_for('blog.blog_preview') }}">Anteprima del blog</a><br>
+        <a href="{{ url_for('blog.clear_cache') }}">Cancella cache del blog</a><br><br>
         <a href="{{ url_for('users.logout') }}">Logout</a>
       </div>
     </div>

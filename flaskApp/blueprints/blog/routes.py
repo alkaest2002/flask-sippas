@@ -277,7 +277,7 @@ def blog_preview():
   )
 
 # -----------------------------------------------------------------
-# CREATE/UPDATE/DELETE POSTS + RESET STICKIES
+# CREATE/UPDATE/DELETE POSTS + CLEAR CACHE
 # -----------------------------------------------------------------
 
 @bp_blog.route("/create", methods=['GET', 'POST'])
@@ -421,7 +421,7 @@ def edit_post(id):
     index.save_objects(indexed_data)
 
     # flash
-    flash("L'articolo è stato creato correttamente", "primary")
+    flash("L'articolo è stato creato correttamente.", "primary")
 
     # redirect on success
     return redirect(url_for('blog.dashboard'))
@@ -443,10 +443,28 @@ def delete_post(id):
   index.delete_objects([id])
 
   # flash
-  flash("L'articolo è stato cancellato correttamente", "primary")
+  flash("L'articolo è stato cancellato correttamente.", "primary")
 
   # redirect
   return redirect(url_for('blog.dashboard'))
+
+@bp_blog.route("/cache/clear")
+@login_required
+@has_role(["editor", "admin"])
+def clear_cache():
+
+  # clear cache
+  cache.clear()
+
+  # flash
+  flash("La cache del blog è stata correttamente cancellata.", "primary")
+
+  # redirect
+  return redirect(url_for('blog.dashboard'))
+
+# -----------------------------------------------------------------
+# RESET STICKIES
+# -----------------------------------------------------------------
 
 @bp_blog.route("/stickies/reset")
 @login_required
