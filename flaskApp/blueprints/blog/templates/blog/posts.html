@@ -22,14 +22,14 @@
           <h2 class="uk-heading-divider">Etichette</h2>
           {% include 'blog/tags_list.html' %}
           <h2 class="uk-heading-divider uk-margin-medium-top">Avanzate</h2>
-          <div class="uk-margin">
+          <div class="uk-margin-top">
             <a href="{{ url_for('blog.posts_search') }}">Cerca articolo &rarr;</a>
           </div>
         </div>
       </div>
     </div>
     {% if posts %}
-    <div class="uk-margin">
+    <div class="uk-margin-small-top">
       {% include pagination %}
     </div>
     {% endif %}
