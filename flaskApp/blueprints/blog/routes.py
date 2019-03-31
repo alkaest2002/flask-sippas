@@ -140,7 +140,8 @@ def posts_tagged_prev(tag, id):
   return render_template(
     "blog/posts.html", 
     posts=posts[::-1], 
-    tag=tag, tags=TAGS,
+    tag=tag, 
+    tags=TAGS,
     pagination="blog/posts_pagination_tagged.html"
   )
 
@@ -216,13 +217,21 @@ def dashboard():
 
 @bp_blog.route("/dashboard/sticky")
 @login_required
+@has_role(["author", "editor", "admin"])
 def dashboard_sticky():
+
+  # init form
+  form = PostQuickEdit()
+
+  # on validate, redirect
+  if form.validate_on_submit():
+    return redirect(url_for('blog.edit_post', id=form.id.data))
   
   # fetch posts
   posts = query_db("SELECT * FROM posts WHERE is_sticky = 1 ORDER BY id DESC LIMIT {}".format(DASHBOARD_PAGE_SIZE))
   
   # render view
-  return render_template("blog/dashboard.html", posts=posts)
+  return render_template("blog/dashboard.html", posts=posts, form=form, show_pagination=False)
 
 # -----------------------------------------------------------------
 # LIST POSTS PER PAGE
@@ -233,6 +242,13 @@ def dashboard_sticky():
 @has_role(["author", "editor", "admin"])
 def dashboard_next(id):
 
+  # init form
+  form = PostQuickEdit()
+
+  # on validate, redirect
+  if form.validate_on_submit():
+    return redirect(url_for('blog.edit_post', id=form.id.data))
+
   # fetch posts
   posts = query_db('SELECT * FROM posts WHERE id < ? ORDER BY id DESC LIMIT {}'.format(DASHBOARD_PAGE_SIZE), [id])
 
@@ -240,12 +256,19 @@ def dashboard_next(id):
   if posts == []: return redirect(url_for('blog.dashboard'))
 
   # render view
-  return render_template("blog/dashboard.html", posts=posts)
+  return render_template("blog/dashboard.html", posts=posts, form=form)
 
 @bp_blog.route("/dashboard/prev/offset/<int:id>")
 @login_required
 @has_role(["author", "editor", "admin"])
 def dashboard_prev(id):
+
+  # init form
+  form = PostQuickEdit()
+
+  # on validate, redirect
+  if form.validate_on_submit():
+    return redirect(url_for('blog.edit_post', id=form.id.data))
 
   # fetch posts
   posts = query_db('SELECT * FROM posts WHERE id > ? ORDER BY id ASC LIMIT {}'.format(DASHBOARD_PAGE_SIZE), [id])
@@ -254,10 +277,10 @@ def dashboard_prev(id):
   if posts == []: return redirect(url_for('blog.dashboard'))
 
   # render view
-  return render_template("blog/dashboard.html", posts=posts[::-1])
+  return render_template("blog/dashboard.html", posts=posts[::-1], form=form)
 
 # -----------------------------------------------------------------
-# CREATE/UPDATE/DELETE POSTS + RESET STICKIES
+# PREVIEW BLOG
 # -----------------------------------------------------------------
 
 @bp_blog.route("/dashboard/frontpage/preview")

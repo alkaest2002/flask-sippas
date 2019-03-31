@@ -6,6 +6,7 @@
   <div class="uk-grid uk-margin-large-bottom">
     <div class="uk-width-4-5@m">
       <h2 class="uk-heading-divider">Elenco articoli</h2>
+      {% if show_pagination | default(True) %}
       <div class="uk-margin-bottom">
         <ul class="uk-pagination uk-margin-remove-bottom">
           <li>
@@ -20,7 +21,7 @@
           </li>
         </ul>
       </div>
-
+      {% endif %}
       <table class="uk-table uk-table-small uk-table-striped uk-margin-remove-top">
         <thead>
           <tr>
@@ -64,21 +65,22 @@
           {% endfor %}
         </tbody>
       </table>
-
-      <div class="uk-margin-top">
-        <ul class="uk-pagination">
-          <li>
-            <a href="{{ url_for('blog.dashboard_prev', id=posts[0].id) }}" class="pagination-previous">
-              <span class="uk-margin-small-right" uk-pagination-previous></span> Più recenti
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for('blog.dashboard_next', id=posts[-1].id) }}" class="pagination-next">
-              Meno recenti <span class="uk-margin-small-left" uk-pagination-next></span>
-            </a>
-          </li>
-        </ul>
-      </div>
+      {% if show_pagination | default(True) %}
+        <div class="uk-margin-top">
+          <ul class="uk-pagination">
+            <li>
+              <a href="{{ url_for('blog.dashboard_prev', id=posts[0].id) }}" class="pagination-previous">
+                <span class="uk-margin-small-right" uk-pagination-previous></span> Più recenti
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('blog.dashboard_next', id=posts[-1].id) }}" class="pagination-next">
+                Meno recenti <span class="uk-margin-small-left" uk-pagination-next></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      {% endif %}
     </div>
     <div class="uk-width-expand">
       <div class=" uk-margin-medium-bottom">
