@@ -2,7 +2,7 @@
 
 Since the website site will have low to medium traffic, I decided to opt for the following stack:
 
-- Flask > [website](http://flask.pocoo.org/)) 
+- Flask > [website](http://flask.pocoo.org/)
 - SQLite >  [website](https://sqlite.org/)
 - UIkit > [website](https://getuikit.com/)
 
