@@ -75,7 +75,6 @@ class PostCreateForm(FlaskForm):
       raise ValidationError('Gli articoli in evidenza devono avere un"immagine.')
     if query_db('SELECT count(*) as count FROM posts WHERE is_sticky = 1', one=True)["count"] == DASHBOARD_PAGE_SIZE:
       raise ValidationError('Hai già selezionato il numero massimo di articoli in evidenza.')
-    raise ValidationError("sicurezza")
 
   def validate_tags(form, field):
     if not field.data: return
