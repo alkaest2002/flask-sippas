@@ -13,4 +13,4 @@ Some optimizations were made in the production environment, most notably a "file
 
 Currently, the site is hosted on a [Digital Ocean](https://www.digitalocean.com/) 5$ droplet with Ubuntu 18.04 LTS, Ngnix and Gunicorn.
 
-Here's the link [https://www.sippas.info](www.sippas.info).
+Here's the link [https://www.sippas.info](https://www.sippas.info).
