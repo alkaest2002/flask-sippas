@@ -10,7 +10,7 @@ TAGS = [
   "#ForzeArmate",
   "#Incivolo",
   "#Medicina",
-  "#NeuroImaging",
+  "#Neuroimaging",
   "#Neuroscienze",
   "#Psichiatria",
   "#Psicologia", 
