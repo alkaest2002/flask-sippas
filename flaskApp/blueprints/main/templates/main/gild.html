@@ -9,16 +9,8 @@
 
         <!-- INCIPIT -->
         <h2 class="uk-heading-divider">Elenco dei soci </h2>
-        <b>☆ Presidente</b> Dott. Gualberto Arduino<br>
-        <b>☆ Vice-Presidente</b> Dott. Franco Garonna<br>
-        <b>☆ Tesoriere</b> Dott. Simeone Izzo<br>
-
-        <div class="uk-margin">
-          Scarica: <a href="{{ url_for('static', filename='docs/sippas_associazione.pdf') }}"
-            target="_blank">Costituzione</a>,
-          <a href="{{ url_for('static', filename='docs/sippas_statuto.pdf') }}" target="_blank">Statuto</a>
-        </div>
-
+        <p class="uk-text-small">La lista è ordinata secondo il <b>cognome</b>.</p>
+        
         <!-- LISTA DEGLI ISCRITTI -->
         <table class="uk-table  uk-table-striped uk-table-small uk-margin-top uk-margin-medium-bottom">
           <thead>
@@ -45,19 +37,39 @@
       <!-- SIDEBAR -->
       <div class="uk-width-1-3@m">
 
+        <!-- BOARD -->
+        <div class="uk-margin-medium-bottom">
+          <h2 class="uk-heading-divider">Board associazione</h2>
+          <b>☆ Presidente</b> Dott. Gualberto Arduino<br>
+          <b>☆ Vice-Presidente</b> Dott. Franco Garonna<br>
+          <b>☆ Tesoriere</b> Dott. Simeone Izzo
+        </div>
+
         <!-- ISCRIZIONE -->
-        <h2 class="uk-heading-divider">Modalità di Iscrizione</h2>
-        <div>
-          <p>La <u>quota una tantum</u> è di 50,00 €. Effettua il pagamento, stampa il
-            <a href="{{ url_for('static', filename='docs/iscrizione.pdf') }}" download="iscrizione.pdf">modulo di
-              iscrizione</a>, compilalo einvialo:
-          </p>
+        <div class="uk-margin-medium-bottom">
+          <h2 class="uk-heading-divider">Modalità di iscrizione</h2>
+          <div>
+            <p>La <u>quota una tantum</u> è di 50,00 €. Effettua il pagamento, stampa il
+              <a href="{{ url_for('static', filename='docs/iscrizione.pdf') }}" download="iscrizione.pdf">modulo di
+                iscrizione</a>, compilalo einvialo:
+            </p>
+            <ul>
+              <li>per email a: info@sippas.it</li>
+              <li>per posta a: Ass.ne SIPPAS, Via Roma 122 scala A int. 5, 00012 Guidonia (RM)</li>
+            </ul>
+            <p>Ricordati di allegare copia del versamento sul seguente c/c bancario: IBAN
+              IT-30-I-07601-03200-000087882056, intestato a: Associazione scientifica Sippas, causale: iscrizione.</p>
+          </div>
+        </div>
+
+        <!-- DOCUMENTS -->
+        <div class="uk-margin-medium-bottom">
+          <h2 class="uk-heading-divider">Documenti associazione</h2>
           <ul>
-            <li>per email a: info@sippas.it</li>
-            <li>per posta a: Ass.ne SIPPAS, Via Roma 122 scala A int. 5, 00012 Guidonia (RM)</li>
-          </ul>
-          <p>Ricordati di allegare copia del versamento sul seguente c/c bancario: IBAN
-            IT-30-I-07601-03200-000087882056, intestato a: Associazione scientifica Sippas, causale: iscrizione.</p>
+            <li><a href="{{ url_for('static', filename='docs/sippas_associazione.pdf') }}" target="_blank">Costituzione</a></li>
+            <li><a href="{{ url_for('static', filename='docs/sippas_statuto.pdf') }}" target="_blank">Statuto</a></li>
+            <li><a href="{{ url_for('static', filename='docs/iscrizione.pdf') }}" download="iscrizione.pdf">modulo di iscrizione</a></li>
+          </ul>          
         </div>
       </div>
     </div>
