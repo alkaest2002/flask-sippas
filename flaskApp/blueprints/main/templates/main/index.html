@@ -51,26 +51,26 @@
         <h2 class="uk-heading-divider">Articoli in evidenza</h2>
         <div class="uk-grid uk-child-width-1-1">
           {% for s in stickies %}
-          {% if s.teaser %}
-          <div class="uk-margin-bottom">
-            <div class="uk-inline">
-              <img src="{{ url_for('static', filename='blog/' + s.teaser | replace('#', s.id | string)) }}" alt="">
-              <div class="uk-overlay uk-overlay-primary uk-position-bottom">
-                <h3 class="uk-text-truncate"><a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a></h3>
+            {% if s.teaser %}
+            <div class="uk-margin-bottom">
+              <div class="uk-inline">
+                <img src="{{ url_for('static', filename='blog/' + s.teaser | replace('#', s.id | string)) }}" alt="">
+                <div class="uk-overlay uk-overlay-primary uk-position-bottom">
+                  <h3 class="uk-text-truncate"><a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a></h3>
+                </div>
               </div>
             </div>
-          </div>
-          {% else %}
-          <div style="height:300px">
-            <div class="uk-card uk-card-primary uk-height-1-1">
-              <div class="uk-card-body">
-                <h3 class="uk-text-truncate uk-position-center uk-padding">
-                  <a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a>
-                </h3>
+            {% else %}
+            <div style="height:300px">
+              <div class="uk-card uk-card-primary uk-height-1-1">
+                <div class="uk-card-body">
+                  <h3 class="uk-text-truncate uk-position-center uk-padding">
+                    <a href="{{ url_for('blog.view_post', id=s.id) }}">{{ s.title }}</a>
+                  </h3>
+                </div>
               </div>
             </div>
-          </div>
-          {% endif %}
+            {% endif %}
           {% endfor %}
         </div>
       </div>
