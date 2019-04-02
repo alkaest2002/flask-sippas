@@ -31,12 +31,12 @@
           </thead>
           <tbody>
             {% for m in members %}
-              <tr>
-                <td class="uk-text-truncate">{{ m["first_name"] }}</td>
-                <td class="uk-text-truncate">{{ m["last_name"] }}</td>
-                <td class="uk-text-truncate uk-visible@s">{{ m["job"] }} - {{ m["affiliation"] }}</td>
-                <td class="uk-visible@s uk-text-center">{{ m["member_since"] }}</td>
-              </tr>
+            <tr>
+              <td class="uk-text-truncate">{{ m["first_name"] }}</td>
+              <td class="uk-text-truncate">{{ m["last_name"] }}</td>
+              <td class="uk-text-truncate uk-visible@s">{{ m["job"] }} - {{ m["affiliation"] }}</td>
+              <td class="uk-visible@s uk-text-center">{{ m["member_since"] }}</td>
+            </tr>
             {% endfor %}
           </tbody>
         </table>
@@ -59,28 +59,6 @@
           <p>Ricordati di allegare copia del versamento sul seguente c/c bancario: IBAN
             IT-30-I-07601-03200-000087882056, intestato a: Associazione scientifica Sippas, causale: iscrizione.</p>
         </div>
-
-        <!-- 5X1000 -->
-        <h2 class="uk-heading-divider uk-margin-medium-top">Donazioni 5 x mille</h2>
-        <ul class="uk-subnav uk-subnav-pill" uk-switcher="">
-          <li aria-expanded="true" class="uk-active"><a href="#">Cosa</a></li>
-          <li aria-expanded="false"><a href="#">Quanto</a></li>
-          <li aria-expanded="false"><a href="#">Come</a></li>
-        </ul>
-        <ul class="uk-switcher uk-margin">
-          <li class="uk-active">
-            <p>È una quota di imposte (Irpef) a cui lo Stato rinuncia per destinarla alle organizzazioni no-profit a
-              sostegno delle loro attività.</p>
-          </li>
-          <li>
-            <p>Il 5 x mille non costa nulla per il cittadino contribuente che esprime semplicemente la sua preferenza a
-              chi donarlo.</p>
-          </li>
-          <li>
-            <p>Nel modello della dichiarazione dei redditi c'è una sezione dedicata al 5 per mille. In questa sezione
-              dovrai specificare il nostro CF: 94048350584.</p>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
