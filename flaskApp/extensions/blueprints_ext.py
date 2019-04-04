@@ -5,6 +5,7 @@ from flaskApp.blueprints.main import bp_main
 from flaskApp.blueprints.gild import bp_gild
 from flaskApp.blueprints.users import bp_users
 from flaskApp.blueprints.blog import bp_blog
+from flaskApp.blueprints.api import bp_api
 
 # simple generic error class
 class GenericError:
@@ -22,6 +23,7 @@ def attach_blueprints(app):
   app.register_blueprint(bp_gild, url_prefix='/gild')
   app.register_blueprint(bp_users, url_prefix='/users')
   app.register_blueprint(bp_blog, url_prefix='/blog')
+  app.register_blueprint(bp_api, url_prefix='/api')
   
   #-----------------------------------------------------------------------------
   # errors handler
