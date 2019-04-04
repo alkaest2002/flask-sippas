@@ -9,10 +9,25 @@
 
         <!-- INCIPIT -->
         <h2 class="uk-heading-divider">Elenco dei soci </h2>
-        <p class="uk-text-small">La lista è ordinata secondo il <b>cognome</b>.</p>
-        
+
+        <!-- PAGINATION -->
+        <div class="uk-margin-top">
+          <ul class="uk-pagination">
+            <li>
+              <a href="{{ url_for('gild.affiliates_prev', id=affiliates[0].id) }}" class="pagination-previous">
+                <span class="uk-margin-small-right" uk-pagination-previous></span> Pag. precedente
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('gild.affiliates_next', id=affiliates[-1].id) }}" class="pagination-next">
+                Pag. successiva <span class="uk-margin-small-left" uk-pagination-next></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
         <!-- LISTA DEGLI ISCRITTI -->
-        <table class="uk-table  uk-table-striped uk-table-small uk-margin-top uk-margin-medium-bottom">
+        <table class="uk-table  uk-table-striped uk-table-small uk-margin-top uk-margin-bottom">
           <thead>
             <tr>
               <th style="width:25%">Nome</th>
@@ -22,16 +37,30 @@
             </tr>
           </thead>
           <tbody>
-            {% for m in members %}
+            {% for a in affiliates %}
             <tr>
-              <td class="uk-text-truncate">{{ m["first_name"] }}</td>
-              <td class="uk-text-truncate">{{ m["last_name"] }}</td>
-              <td class="uk-text-truncate uk-visible@s">{{ m["job"] }} - {{ m["affiliation"] }}</td>
-              <td class="uk-visible@s uk-text-center">{{ m["member_since"] }}</td>
+              <td class="uk-text-truncate">{{ a["first_name"] }}</td>
+              <td class="uk-text-truncate">{{ a["last_name"] }}</td>
+              <td class="uk-text-truncate uk-visible@s">{{ a["job"] }} - {{ a["affiliation"] }}</td>
+              <td class="uk-visible@s uk-text-center">{{ a["member_since"] }}</td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
+        <div class="uk-margin-top">
+          <ul class="uk-pagination">
+            <li>
+              <a href="{{ url_for('gild.affiliates_prev', id=affiliates[0].id) }}" class="pagination-previous">
+                <span class="uk-margin-small-right" uk-pagination-previous></span> Pag. precedente
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('gild.affiliates_next', id=affiliates[-1].id) }}" class="pagination-next">
+                Pag. successiva <span class="uk-margin-small-left" uk-pagination-next></span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <!-- SIDEBAR -->
@@ -66,10 +95,12 @@
         <div class="uk-margin-medium-bottom">
           <h2 class="uk-heading-divider">Documenti associazione</h2>
           <ul>
-            <li><a href="{{ url_for('static', filename='docs/sippas_associazione.pdf') }}" target="_blank">Costituzione</a></li>
+            <li><a href="{{ url_for('static', filename='docs/sippas_associazione.pdf') }}"
+                target="_blank">Costituzione</a></li>
             <li><a href="{{ url_for('static', filename='docs/sippas_statuto.pdf') }}" target="_blank">Statuto</a></li>
-            <li><a href="{{ url_for('static', filename='docs/iscrizione.pdf') }}" download="iscrizione.pdf">modulo di iscrizione</a></li>
-          </ul>          
+            <li><a href="{{ url_for('static', filename='docs/iscrizione.pdf') }}" download="iscrizione.pdf">Modulo di
+                iscrizione</a></li>
+          </ul>
         </div>
       </div>
     </div>
