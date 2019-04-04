@@ -6,7 +6,7 @@ chardet==3.0.4
 Click==7.0
 Cython==0.29.6
 Flask==1.0.2
-Flask-Caching==1.6.0
+Flask-Caching==1.7.0
 Flask-Login==0.4.1
 Flask-Uploads==0.2.1
 Flask-WTF==0.14.2
@@ -20,5 +20,5 @@ python-dotenv==0.10.1
 requests==2.21.0
 six==1.12.0
 urllib3==1.24.1
-Werkzeug==0.15.1
+Werkzeug==0.15.2
 WTForms==2.2.1
