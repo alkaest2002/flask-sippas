@@ -159,13 +159,16 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-  if (document.cookie != "sippas_cookie_consent=true" && false) {
-    const msg = "Questo sito si avvale di <b>cookie tecnici</b> per fornire all'utente finale la migliore esperienza d'uso. Proseguendo la navigazione all'interno del sito, acconsenti all’uso dei cookie.<br><br><b>Clicca qui</b> per chiudere questa finestra"
-    UIkit.notification(msg, { pos: 'top-right', timeout: 6000 });
-    UIkit.util.on(".uk-notification", 'close', function () {
-      document.cookie = "sippas_cookie_consent=true";
-    });
-  }
-</script>
+  {% if show_cookie_consent %}
+    <script>
+      const msg = "Questo sito si avvale di <b>cookie tecnici e analitici</b> per fornire all'utente finale la migliore esperienza d'uso. Proseguendo la navigazione all'interno del sito, acconsenti all’uso dei cookie.<br><br><b>Clicca qui</b> per chiudere questa finestra"
+      UIkit.notification(msg, { pos: 'top-right', timeout: 0 });
+      UIkit.util.on(".uk-notification", 'close', function () { 
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'api/setCookieConsent');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send()
+      })
+    </script>
+  {% endif %}
 {% endblock scripts %}
