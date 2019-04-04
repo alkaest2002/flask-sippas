@@ -1,5 +1,7 @@
 
-from flask import Flask
+import datetime
+
+from flask import Flask, request
 from dotenv import load_dotenv
 
 # load .env variables
@@ -8,6 +10,13 @@ load_dotenv(dotenv_path=env_path)
 
 # init app
 app = Flask(__name__)
+
+# add cookie
+@app.after_request
+def after_request(response):
+  if request.path != "/":
+    response.set_cookie("sippas_cookie_consent", value="set",  expires=datetime.datetime.now() + datetime.timedelta(days=365))
+  return response
 
 # config app
 app.config.from_object("config.devConfig")
