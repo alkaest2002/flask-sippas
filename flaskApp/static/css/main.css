@@ -65,8 +65,6 @@ thead tr th {
 
 .uk-notification-message {
   position: relative;
-  top: 15px;
-  left: -15px;
   background: #aacef4;
   color: #031a4e;
   border: 1px dashed #031a4e;
