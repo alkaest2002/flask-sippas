@@ -6,13 +6,13 @@ chardet==3.0.4
 Click==7.0
 Cython==0.29.6
 Flask==1.0.2
-Flask-Caching==1.7.0
+Flask-Caching==1.7.1
 Flask-Login==0.4.1
 Flask-Uploads==0.2.1
 Flask-WTF==0.14.2
 idna==2.8
 itsdangerous==1.1.0
-Jinja2==2.10
+Jinja2==2.10.1
 MarkupSafe==1.1.1
 mistune==0.8.4
 pycparser==2.19
